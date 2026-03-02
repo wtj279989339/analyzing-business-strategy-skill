@@ -96,6 +96,8 @@ Longer length = more content covered, more insights delivered. Content density p
 3. **Pyramid principle** — Lead with the answer. Support with storylines. Back each storyline with evidence.
 4. **So-what test** — Every data point must answer "so what?" If it doesn't drive a recommendation, cut it.
 
+**User engagement principle:** Use `AskUserQuestion` tool whenever asking the user questions with discrete choices throughout the engagement (Phase 1 scope, Phase 2 preliminary findings, Phase 3 working checkpoints, Phase 4 final sign-off, Phase 6 next steps). This creates a selection UI in Claude Code and improves user experience. Only use plain text for open-ended questions.
+
 ---
 
 ## Team Structure
@@ -348,17 +350,10 @@ Engagement Progress:
   1. label: "3min — Focused", description: "Quick assessment, focused scope (2-3 experts, 5-8 slides / 800-1200 words)"
   2. label: "5min — Standard (Recommended)", description: "Typical strategy work, balanced coverage (3-4 experts, 10-15 slides / 2000-2500 words)"
   3. label: "10min — Comprehensive", description: "Detailed evidence and benchmarking (4-5 experts, 20-25 slides / 4000-5000 words)"
-  4. label: "10minensive", description: "Full strategic review with deep analysis (5-6 experts, 30+ slides / 6000+ words)"
+  4. label: "10min+ — Extensive", description: "Full strategic review with deep analysis (5-6 experts, 30+ slides / 6000+ words)"
   ```
 
-- **Use `AskUserQuestion` for follow-up clarifications** when they involve choices. Examples:
-  - Budget ranges: "<$500K", "$500K-$2M", "$2M+", "Not yet determined"
-  - Timeline: "3-6 months", "6-12 months", "12-18 months", "Exploratory (no fixed timeline)"
-  - Target customer segments: "DIY homeowners", "Professional painters", "Eco-conscious consumers", "Commercial/institutional", "Multiple segments"
-  - Audience: "Board/investors", "Operations team", "Marketing team", "Internal decision-making", "Multiple stakeholders"
-  - Geographic focus: "UK", "Germany", "France", "Multiple EU countries", "US East Coast", "US West Coast", "US nationwide", "Both EU and US equally"
-
-  **When to use plain text instead:** Open-ended questions like "What's your competitive advantage?", "What are your biggest concerns?", "Tell me about your product."
+- **Use `AskUserQuestion` for follow-up clarifications** when they involve choices. Examples: budget ranges ("<$500K", "$500K-$2M", "$2M+"), timeline ("3-6 months", "6-12 months", "12-18 months"), target segments, audience, geographic focus. Use plain text for open-ended questions.
 
 - Ask about internal data, proprietary research, or specific datasets (use `AskUserQuestion` if asking about availability with yes/no/partial options)
 - Ask about the user's background and what they care about — this shapes the analysis
@@ -372,8 +367,11 @@ Engagement Progress:
 - After agents return: `ls process/*.yaml` — re-dispatch any that didn't write their file.
 - **Build MECE issue tree** with two exposure levels:
   - Internal (saved to `process/issue-tree.yaml`): Key questions + hypotheses (H1, H2, H3)
-  - User-facing: ASCII tree with key questions + verbal context (not granular hypotheses)
-- **★ PRELIMINARY FINDINGS CHECKPOINT (mandatory):** Present preliminary findings + issue tree to user. These are preliminary (1/4 of the square) — room to go deeper in Phase 3.
+  - User-facing: ASCII tree with key questions + verbal context (no granular hypotheses)
+- **★ PRELIMINARY FINDINGS CHECKPOINT (mandatory):** Present preliminary findings + issue tree to user. Use `AskUserQuestion` to get feedback:
+  - Example question: "Does this framing make sense? Should we proceed to deeper analysis?"
+  - Options: "Yes, proceed as planned" / "Adjust focus (specify which areas)" / "Major pivot needed"
+  - If user wants to adjust focus, follow up with another `AskUserQuestion` asking which areas to prioritize for Phase 3
 
 ### Phase 3: Hypothesis Validation & Recommendations
 
@@ -383,7 +381,8 @@ Engagement Progress:
 - **Run `scripts/validate_process.py process/`** after each research round to catch common data quality issues. Review warnings and decide whether to re-dispatch agents or proceed. The Partner review is the final quality gate.
 - **Cross-workstream contradiction check (MANDATORY):** If Expert A's finding contradicts Expert B's assumption, resolve it before proceeding.
 - **Pivot check (MANDATORY):** After each round, ask: "Does this change the issue tree?" If yes → update YAML, spawn new workstreams, iterate within Phase 3.
-- **Working checkpoints (optional):** Share findings when meaningful or when you need user input.
+- **Working checkpoints (optional):** Share findings when meaningful or when you need user input. Use `AskUserQuestion` when asking for direction:
+  - Example: "We found X. Should we: (A) Go deeper on this area, (B) Pivot to explore Y instead, (C) Continue as planned"
 
 ### Phase 4: Final Checkpoint ⚠️ REQUIRED
 
@@ -399,7 +398,10 @@ Recommendation: Go via Amazon DTC, phased launch
     └── [HIGH] Launch cost ~$180K ← 3 comparable case studies
 ```
 
-**★ USER SIGN-OFF required before deliverable.**
+**★ USER SIGN-OFF required before deliverable.** Use `AskUserQuestion`:
+- Question: "Ready to proceed with building the deliverable?"
+- Options: "Yes, proceed" / "Minor adjustments needed" / "Major restructure needed"
+- If adjustments needed, follow up to understand what to change
 
 ### Phase 5: Deliverable Creation
 
@@ -418,6 +420,10 @@ Recommendation: Go via Amazon DTC, phased launch
 - **Category B (human action):** Generate ready-to-use documents in `next-steps/` (interview guides, surveys, data requests, meeting agendas)
 - Save `process/engagement-state.yaml` for resumability
 - Frame as: "Here's the best analysis with available data. Come back with [specific items] and I'll show how the picture changes."
+- **Use `AskUserQuestion` to prioritize next steps** if proposing multiple follow-up actions:
+  - Question: "Which follow-up actions should we prioritize?" (multiSelect: true)
+  - List the proposed actions as options
+  - This helps focus on what matters most to the user
 
 ---
 
