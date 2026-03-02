@@ -71,7 +71,6 @@ Same core questions above, but emphasize different aspects by phase:
 |-------|---------|----------|-------------|
 | **Phase 2** | End-of-phase meeting + review | **Strategic framing** - Is the issue tree MECE? Are we asking the right questions? Should any workstreams be added/removed/restructured? | `partner-review-phase2.yaml` |
 | **Phase 3 Start** | Meeting (conditional - only if user gives major change request) | **Scope adjustment** - How do user's changes affect the engagement? Does the issue tree need restructuring? | (no review file - just meeting facilitation) |
-| **Phase 3 Mid** | Mid-phase meeting | **Validation progress** - Are we on track? Identify gaps and weak spots. Challenge weak evidence. | (no review file - just meeting facilitation) |
 | **Phase 3 End** | Final meeting + review | **Evidence quality** - Are conclusions supported? Is evidence solid? Are recommendations defensible? | `partner-review-validation.yaml` |
 | **Phase 4** | Final review | **Complete narrative** - Does the complete story hold together? Is the narrative arc compelling? Ready to present to user? | `partner-review-final.yaml` |
 

@@ -6,8 +6,13 @@ SKILL.md.backup
 SKILL.md.new
 SKILL.md.old
 
-# Version history (internal development tracking)
+# Version history and planning (internal development tracking)
 CHANGES.md
+CONSOLIDATION_PLAN.md
+CONSOLIDATION_COMPLETE.md
+CONSISTENCY_FIXES.md
+*_PLAN.md
+*_COMPLETE.md
 
 # Backup directories (timestamped backups)
 *-backup-*/

@@ -318,27 +318,9 @@ Each paragraph should have:
 
 ## Case Study Standards
 
-When presenting case studies, include all 4 dimensions for the 1-2 most relevant examples:
+**See `references/templates/yaml-formats.md` for complete case study requirements (4 dimensions: what they did, outcomes, what worked/didn't work, lesson for client).**
 
-1. **What they did** — Specific actions, not vague "they entered the market"
-2. **Outcomes** — Quantitative results with timeframes (revenue, market share, growth rate)
-3. **What worked / didn't work** — Root causes, not just symptoms
-4. **Lesson for this client** — Explicit connection to the current decision
-
-**Example:**
-> **Case Study: Uniqlo's EU Entry (2001)**
->
-> **What they did:** Entered UK first via flagship store in London, then expanded to France and Germany. Used self-developed big-data tool to optimize inventory and pricing based on local preferences.
->
-> **Outcomes:** Reached €500M revenue in EU by 2010 (9 years post-entry). UK became their 3rd largest market globally.
->
-> **What worked:** Flagship store strategy built brand awareness before e-commerce launch. Data-driven localization (different color preferences in UK vs. Germany) avoided one-size-fits-all mistakes.
->
-> **What didn't work:** Initial pricing was too low, positioned them as "cheap" not "value." Took 3 years to reposition upmarket.
->
-> **Lesson for [Client]:** Start with one market (UK) to learn before expanding. Invest in localization — don't assume EU is homogeneous. Price positioning matters more than absolute price.
-
-For supporting comparables (not key case studies), a brief mention with source is acceptable: "Company Y entered via retail partnership and reached breakeven in 18 months (Capital IQ)."
+For documents: Present 1-2 key case studies with all 4 dimensions in narrative form. Supporting comparables can be brief mentions with sources.
 
 ---
 
@@ -577,16 +559,14 @@ Before presenting the document to the user, verify:
 
 ## BCG Patterns to Follow
 
-**Read `references/methodology/bcg-patterns.md` for complete patterns.** Key takeaways:
+**Read `references/methodology/bcg-patterns.md` for complete consulting patterns.**
 
-1. **Lead with the answer** — Executive summary first, then evidence
-2. **Every section ends with "Implications to [client]"** — don't just present data
-3. **Use specific numbers, not vague language** — "15% CAGR" not "significant growth"
-4. **Benchmark against named competitors** — "Uniqlo, Heilan, Nike" not "industry peers"
-5. **Frame transformation as levers** — number them, show individual and combined impact
-6. **Use "From... To..." for change narratives** — current state vs. future state
-7. **Ranges over false precision** — "$590M-$650M" not "$623M"
-8. **Footnotes are mandatory** — every data slide has source attribution
+Key patterns for documents:
+- Lead with the answer (executive summary first)
+- Every section ends with "Implications to [client]"
+- Use specific numbers and named competitors
+- Frame transformation as numbered levers
+- Footnotes are mandatory for all data
 
 ---
 

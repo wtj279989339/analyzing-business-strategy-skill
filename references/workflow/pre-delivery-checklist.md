@@ -96,12 +96,7 @@ Verify EVERY item before presenting deliverable to user.
 
 ## Output Length Standards
 
-| Length Flag | Deliverable Size |
-|-------------|------------------|
-| `3min` | 5-8 slides / 800-1200 words |
-| `5min` | 10-15 slides / 2000-2500 words |
-| `10min` | 20-25 slides / 4000-5000 words |
-| `10min+` | 30+ slides / 6000+ words |
+**See SKILL.md `--length` parameter for minimum output standards by engagement length.**
 
 **Rule:** Deliverable must meet the minimum for engagement depth (3000-4000 words for standard, 5000-7000 for deep) OR 60% of research volume, whichever is higher. If shorter, Deliverable Advisor is over-compressing.
 

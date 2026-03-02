@@ -35,6 +35,7 @@
 | Role | Use | Parameter |
 |------|-----|-----------|
 | Partner | TEAMMATE | `team_name="<project>-strategy"` |
+| Fact-Checker | TEAMMATE | `team_name="<project>-strategy"` |
 | Business Expert A/B/C | TEAMMATE | `team_name="<project>-strategy"` |
 | Deliverable Advisor | TEAMMATE | `team_name="<project>-strategy"` |
 | Data-fetching intern (spawned BY an expert) | subagent | NO team_name |
@@ -47,7 +48,9 @@
 PL (main session — you)
   │  Directions, storytelling, narrative arc, user communication
   │
-  ├── Partner (teammate) — Quality gate, can message any teammate directly
+  ├── Partner (teammate) — Quality gate, facilitates meetings, reviews Fact-Checker reports
+  │
+  ├── Fact-Checker (teammate) — Data integrity verification, meeting notes
   │
   ├── Business Expert A (teammate) — Problem scope 1 ─┐
   ├── Business Expert B (teammate) — Problem scope 2  ├── peer-to-peer + can spawn subagents
@@ -105,6 +108,7 @@ TeamCreate(
 
 ```python
 TaskCreate(subject="Partner review", description="Quality gate", activeForm="Reviewing findings")
+TaskCreate(subject="Fact-checking and meeting notes", description="Data verification and documentation", activeForm="Verifying data quality")
 TaskCreate(subject="<problem scope A>", description="...", activeForm="Analyzing <A>")
 TaskCreate(subject="<problem scope B>", description="...", activeForm="Analyzing <B>")
 TaskCreate(subject="<problem scope C>", description="...", activeForm="Analyzing <C>")
@@ -122,6 +126,15 @@ Agent(
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",   # ← REQUIRED
     name="partner",                          # ← REQUIRED
+    model="opus"
+)
+
+# Fact-Checker — no plan approval needed (data verification and meeting notes)
+Agent(
+    prompt="<Fact-Checker prompt>",
+    subagent_type="general-purpose",
+    team_name="<project-slug>-strategy",   # ← REQUIRED
+    name="fact-checker",                     # ← REQUIRED
     model="opus"
 )
 
@@ -162,10 +175,11 @@ Agent(
 
 ```python
 TaskUpdate(taskId="1", owner="partner")
-TaskUpdate(taskId="2", owner="expert-a")
-TaskUpdate(taskId="3", owner="expert-b")
-TaskUpdate(taskId="4", owner="expert-c")
-TaskUpdate(taskId="5", owner="deliverable-advisor")
+TaskUpdate(taskId="2", owner="fact-checker")
+TaskUpdate(taskId="3", owner="expert-a")
+TaskUpdate(taskId="4", owner="expert-b")
+TaskUpdate(taskId="5", owner="expert-c")
+TaskUpdate(taskId="6", owner="deliverable-advisor")
 ```
 
 ### 5. Review and Approve Expert Plans
@@ -603,6 +617,8 @@ the end.
 **Deliverable format:** [slides / report / dashboard — specify which nested skill to read]
 **Nested skill file:** Read [skills/frontend-slides/SKILL.md or relevant skill file] using the Read tool (NOT Skill tool)
 to understand format-specific capabilities and constraints.
+
+**Before building the deliverable:** Read `references/methodology/bcg-patterns.md` during Phase 5 to understand consulting-specific patterns.
 
 **During research phases (Phase 2-3), your job:**
 1. Review the issue tree from a presentation perspective — flag branches that will be hard

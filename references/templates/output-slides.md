@@ -502,18 +502,14 @@ Assume there are problems. Your first render is almost never correct.
 
 ## BCG Patterns to Follow
 
-**Read `references/methodology/bcg-patterns.md` for complete patterns.** Key takeaways for slides:
+**Read `references/methodology/bcg-patterns.md` for complete consulting patterns.**
 
-1. **Slide headlines state a conclusion, not a topic** — "Market is attractive" not "Market Overview"
-2. **Lead with the answer** — Executive summary first, then evidence
-3. **Show your sources early** — "Basis of Perspectives" slide is not optional (for standard+ engagements)
-4. **Use specific numbers** — "15% CAGR from '23 to '30" not "significant growth"
-5. **Benchmark against named competitors** — "Uniqlo, Heilan, Nike" not "industry peers"
-6. **"Implications to [client]" after benchmarks** — don't just present data
-7. **Frame transformation as levers** — number them (Lever 1-6), show individual and combined impact
-8. **Use "From... To..." for change narratives** — current state vs. future state
-9. **Ranges over false precision** — "$590M-$650M" not "$623M"
-10. **Footnotes are mandatory** — every data slide has source attribution
+Key patterns for slides:
+- Slide headlines state conclusions, not topics
+- Lead with the answer (executive summary first)
+- Use specific numbers and named competitors
+- Add "Implications to [client]" after benchmarks
+- Footnotes are mandatory for all data
 
 ---
 
@@ -587,48 +583,9 @@ Consumer Research:
 
 ## Case Study Standards
 
-When presenting case studies on slides, use one slide per case study (or one slide for 2-3 brief comparables).
+**See `references/templates/yaml-formats.md` for complete case study requirements (4 dimensions: what they did, outcomes, what worked/didn't work, lesson for client).**
 
-**For 1-2 key case studies, include all 4 dimensions:**
-
-```
-Headline: Uniqlo's EU entry demonstrates value of phased approach
-
-What they did:
-• Entered UK first via flagship store in London (2001)
-• Used self-developed big-data tool for inventory optimization
-• Expanded to France and Germany after UK success
-
-Outcomes:
-• Reached €500M revenue in EU by 2010 (9 years post-entry)
-• UK became 3rd largest market globally
-
-What worked / didn't work:
-• ✓ Flagship strategy built brand awareness before e-commerce
-• ✓ Data-driven localization avoided one-size-fits-all mistakes
-• ✗ Initial pricing too low, took 3 years to reposition upmarket
-
-Lesson for [Client]:
-Start with one market (UK) to learn before expanding. Invest in localization — don't assume EU is homogeneous. Price positioning matters more than absolute price.
-
-Source: Company reports, Capital IQ
-```
-
-**For supporting comparables (not key case studies), use a comparison table:**
-
-```
-Headline: DTC launches typically reach breakeven in 12-18 months
-
-| Company | Entry Year | Channel | Launch Cost | Time to Breakeven |
-|---------|------------|---------|-------------|-------------------|
-| Company X | 2019 | Amazon UK | $150K | 14 months |
-| Company Y | 2021 | Shopify DTC | $220K | 18 months |
-| Company Z | 2022 | Amazon DE | $180K | 12 months |
-
-Average: $183K launch cost, 14.7 months to breakeven
-
-Source: Case studies, Capital IQ
-```
+For slides: Use one slide per key case study with all 4 dimensions in bullet format. Supporting comparables can use a comparison table.
 
 ---
 

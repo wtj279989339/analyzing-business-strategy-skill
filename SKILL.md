@@ -102,18 +102,9 @@ Longer length = more content covered, more insights delivered. Content density p
 
 ## Team Structure
 
-```
-PL (main session — you)
-  │  Directions, storytelling, narrative arc, user communication
-  │
-  ├── Partner (teammate) — Quality gate, can message any teammate directly
-  │
-  ├── Business Expert A (teammate) — Problem scope 1 ─┐
-  ├── Business Expert B (teammate) — Problem scope 2  ├── peer-to-peer + can spawn subagents
-  ├── Business Expert C (teammate) — Problem scope 3 ─┘
-  │
-  └── Deliverable Advisor (teammate) — Format/presentation, alive throughout
-```
+**For complete team structure, roles, and spawning instructions, see `references/methodology/agent-teams-guide.md`.**
+
+Quick summary: You are the PL (Project Lead). Your team includes Partner (quality gate), Fact-Checker (data verification + meeting notes), Business Experts (2-6 depending on --length), and Deliverable Advisor (format/presentation). All are teammates (not subagents) when Agent Teams are available.
 
 **You are the PL (Project Lead).** You manage phases, checkpoints, user interaction, and narrative direction. You decide how many Business Experts to deploy based on complexity. You synthesize findings into a coherent storyline and present to the user at checkpoints.
 
@@ -166,7 +157,39 @@ Each expert produces an analytical conclusion, not a data dump. Problem scopes d
 
 ### Partner (Evaluator)
 
-The Partner stress-tests all work before it reaches the user. Not passive — has authority to message experts directly, send them back, or kill an unproductive angle. The Partner communicates with the PL on narrative direction and with Business Experts on evidence quality. Their reviews are saved to `process/partner-review-*.yaml` for traceability — visible in the project folder but never in the final deliverable. If the Partner is not satisfied, teammates iterate until the work meets the bar. The user only sees pre-vetted output. **Read `references/methodology/partner-guide.md` before any Partner review.**
+The Partner stress-tests all work before it reaches the user. **Partner focuses on strategic review, not data verification** - the Fact-Checker agent handles data integrity checks. Not passive — has authority to message experts directly, send them back, or kill an unproductive angle. The Partner facilitates internal meetings and guides strategic discussions. Their reviews are saved to `process/partner-review-*.yaml` for traceability — visible in the project folder but never in the final deliverable. If the Partner is not satisfied, teammates iterate until the work meets the bar. The user only sees pre-vetted output.
+
+**Read `references/methodology/partner-guide.md` before any Partner review.**
+
+### Fact-Checker (Data Integrity & Documentation)
+
+The Fact-Checker verifies data quality and documents meetings. Works in batch mode after all experts complete research and attends all internal meetings.
+
+**Responsibilities:**
+- **Fact-checking**: Verify ALL data points in expert YAML files (not just samples)
+  - Check every key data point has `source_type` (verified/model_estimate/derived)
+  - Verify every `verified` data point has retrievable `source_url`
+  - Spot-check URLs (20-30% in Phase 2, 50%+ in Phase 3)
+  - Cross-check for contradictions across experts
+  - Flag high `model_estimate` ratios (>10%)
+  - **Flag contradictions, don't resolve them** - PL or Partner messages affected experts to resolve
+- **Meeting notes**: Capture discussions from SendMessage transcripts
+  - Attend all internal meetings (2 meetings per engagement)
+  - Document key discussions, decisions, action items, contradictions resolved
+  - Write structured YAML meeting notes
+
+**Check depth:**
+- **Phase 2 (preliminary)**: Light-to-medium check
+- **Phase 3 (deep)**: Medium-to-heavy check (more thorough since this goes to user)
+
+**Outputs:**
+- `process/fact-check-phase2.yaml` - After all experts finish Phase 2
+- `process/fact-check-phase3.yaml` - After all experts finish Phase 3
+- `process/meeting-phase2.yaml` - End of Phase 2 meeting notes
+- `process/meeting-phase3-start.yaml` - Start of Phase 3 meeting notes (optional, only if user gives major change request)
+- `process/meeting-phase3-final.yaml` - Final Phase 3 meeting notes
+
+**Partner reviews Fact-Checker's reports** and decides if flagged issues undermine recommendations.
 
 ### Deliverable Advisor
 
@@ -246,7 +269,7 @@ Engagement Progress:
   - [ ] 0.4 Detect Agent Teams / output dependencies
   - [ ] 0.5 Check available data sources (read references/data-sources.md)
   - [ ] 0.6 Suggest agent web access permissions if not configured (see references/setup-guide.md)
-  - [ ] 0.7 Spawn team (Partner, Deliverable Advisor) if Agent Teams available
+  - [ ] 0.7 Spawn team (Partner, Fact-Checker, Deliverable Advisor) if Agent Teams available
 - [ ] Phase 1: Scope & Clarification ⚠️ REQUIRED
   - [ ] 1.1 Restate problem, ask clarifying questions
   - [ ] 1.2 Ask output format (mandatory unless --format set)
@@ -287,7 +310,9 @@ Engagement Progress:
   - [ ] 3.7 MANDATORY MEETING: Final synthesis (all experts + PL + Partner + Fact-Checker)
   - [ ] 3.7.1 Partner facilitates discussion, Fact-Checker takes notes → process/meeting-phase3-final.yaml
   - [ ] 3.8 READ references/partner-guide.md before Partner review
-  - [ ] 3.9 Partner review → process/partner-review-validation.yaml (evidence quality focus)
+  - [ ] 3.9 Partner review → process/partner-review-validation.yaml
+        → Focus: Analytical quality - Are conclusions logically supported by evidence? Do recommendations follow from findings?
+        → Note: Fact-Checker verifies data accuracy; Partner checks if the reasoning is sound
         → Partner can trigger restructure → loop to Phase 2
   - [ ] 3.10 Working checkpoints (optional) — share findings when meaningful
   - Loop-back count: 0
@@ -316,117 +341,30 @@ Engagement Progress:
 
 ## Phase Essentials
 
-**BEFORE starting any phase, read `references/workflow/phases-overview.md` for complete instructions.** The essentials below are abbreviated — the reference file has critical details on agent prompting, YAML requirements, Partner review workflow, and validation steps that are not included here.
+**For complete phase-by-phase instructions, read `references/workflow/phases-overview.md` before starting any phase.**
 
-### Phase 0: Environment Check ⛔ BLOCKING
-
-**Do this FIRST.** Models tend to skip setup — don't. Skipping causes mid-engagement interruptions.
-
-- Create project folder: `mkdir -p "<slug>/process"` — tell user the path
-- Test web access (WebFetch → curl → MCP → model-only fallback chain)
-- **Agent web access:** Subagents don't inherit permissions. Suggest adding to `~/.claude/settings.json`:
-  ```json
-  { "permissions": { "allow": ["Bash(curl *)", "WebFetch"] } }
-  ```
-  If user won't change settings, use pre-fetch pattern: Lead fetches data, passes into agent prompts.
+Quick summary of the 6-phase workflow:
+- **Phase 0:** Setup (spawn team if Agent Teams available, test web access) — **See `references/methodology/agent-teams-guide.md` for spawning instructions**
+- **Phase 1:** Scope (clarify problem, confirm format/length) → ★ SCOPE CHECKPOINT
+- **Phase 2:** Preliminary research (deploy experts, Fact-Checker verifies, internal meeting, Partner review) → ★ PRELIMINARY FINDINGS CHECKPOINT
+- **Phase 3:** Deep problem solving (validate hypotheses, optional start meeting if major change request, Fact-Checker verifies, final meeting, Partner review)
+- **Phase 4:** Final checkpoint (Partner final review, present deliverable structure) → ★ USER SIGN-OFF
+- **Phase 5:** Deliverable creation (Deliverable Advisor builds output)
+- **Phase 6:** Next steps (suggest follow-up work)
 
 ### Phase 1: Scope & Clarification ⚠️ REQUIRED
 
-- **Use `AskUserQuestion` tool frequently** for any question with discrete choices. This creates a selection UI in Claude Code and improves user experience. Only use plain text for open-ended questions (e.g., "Tell me about your product").
+**CRITICAL: Use `AskUserQuestion` tool for ALL questions with discrete choices.** This creates a selection UI and dramatically improves user experience. The skill historically under-uses this tool — be proactive.
 
-- **You MUST ask output format** before scope checkpoint (unless `--format` set). Do not assume markdown. Do not decide the format on the user's behalf.
+- **You MUST use `AskUserQuestion`** for:
+  - Output format selection (markdown, slides, pptx, docx, notion)
+  - Report length/depth (3min, 5min, 10min, 10min+)
+  - Any follow-up with discrete options (budget ranges, timelines, target segments, geographic focus, audience type)
+  - Prioritizing next steps or follow-up actions
 
-  Use `AskUserQuestion` with EXACTLY these options (do not add, remove, or modify):
-  ```
-  Question: "What format would you like the final deliverable in?"
-  Header: "Output format"
-  Options:
-  1. label: "Markdown report (.md)", description: "Detailed, editable, easy to share"
-  2. label: "HTML slides", description: "Visual, presentable to stakeholders"
-  3. label: "PowerPoint (.pptx)", description: "Traditional slide deck"
-  4. label: "Word document (.docx)", description: "Formal report format"
-  5. label: "Notion page", description: "Collaborative, team-editable"
-  ```
+- **Only use plain text** for truly open-ended questions like "Tell me about your product" or "What constraints should I know about?"
 
-- **You MUST ask report length** before scope checkpoint (unless `--length` set). Do not default to "standard" without asking.
-
-  Use `AskUserQuestion` with EXACTLY these options (do not add, remove, or modify):
-  ```
-  Question: "How much content should the analysis cover?"
-  Header: "Content depth"
-  Options:
-  1. label: "3min — Focused", description: "Quick assessment, focused scope (2-3 experts, 5-8 slides / 800-1200 words)"
-  2. label: "5min — Standard (Recommended)", description: "Typical strategy work, balanced coverage (3-4 experts, 10-15 slides / 2000-2500 words)"
-  3. label: "10min — Comprehensive", description: "Detailed evidence and benchmarking (4-5 experts, 20-25 slides / 4000-5000 words)"
-  4. label: "10min+ — Extensive", description: "Full strategic review with deep analysis (5-6 experts, 30+ slides / 6000+ words)"
-  ```
-
-- **Use `AskUserQuestion` for follow-up clarifications** when they involve choices. Examples: budget ranges ("<$500K", "$500K-$2M", "$2M+"), timeline ("3-6 months", "6-12 months", "12-18 months"), target segments, audience, geographic focus. Use plain text for open-ended questions.
-
-- Ask about internal data, proprietary research, or specific datasets (use `AskUserQuestion` if asking about availability with yes/no/partial options)
-- Ask about the user's background and what they care about — this shapes the analysis
-- **★ SCOPE CHECKPOINT:** User confirms problem statement, scope, format. Do not proceed without this. Before presenting, verify you have explicitly asked about output format.
-
-### Phase 2: Landscape Research & Preliminary Findings
-
-- **PL decides what topics to cover** (3-5 areas most relevant to engagement): market context, competitive landscape, customer insights, regulatory environment, cost structure, strategic fit, etc.
-- **Phase 2 is internally iterative:** Research → insights → form hypotheses → more research needed? → refine → repeat until preliminary findings are solid
-- **Every agent MUST write YAML to `process/`.** Include this in every prompt. YAML format is in `references/templates/yaml-formats.md`.
-- After agents return: `ls process/*.yaml` — re-dispatch any that didn't write their file.
-- **Build MECE issue tree** with two exposure levels:
-  - Internal (saved to `process/issue-tree.yaml`): Key questions + hypotheses (H1, H2, H3)
-  - User-facing: ASCII tree with key questions + verbal context (no granular hypotheses)
-- **★ PRELIMINARY FINDINGS CHECKPOINT (mandatory):** Present preliminary findings + issue tree to user. Use `AskUserQuestion` to get feedback:
-  - Example question: "Does this framing make sense? Should we proceed to deeper analysis?"
-  - Options: "Yes, proceed as planned" / "Adjust focus (specify which areas)" / "Major pivot needed"
-  - If user wants to adjust focus, follow up with another `AskUserQuestion` asking which areas to prioritize for Phase 3
-
-### Phase 3: Hypothesis Validation & Recommendations
-
-- **Phase 3 is internally iterative:** Validate → discover gaps → research deeper → refine → repeat until satisfied
-- **Phase 3 can go anywhere in the square:** Go deep on specific areas, go broader if needed, validate hypotheses, develop recommendations
-- **Verify all agents wrote YAML files:** Run `ls process/*.yaml` after agents return — re-dispatch any that didn't write their file.
-- **Run `scripts/validate_process.py process/`** after each research round to catch common data quality issues. Review warnings and decide whether to re-dispatch agents or proceed. The Partner review is the final quality gate.
-- **Cross-workstream contradiction check (MANDATORY):** If Expert A's finding contradicts Expert B's assumption, resolve it before proceeding.
-- **Pivot check (MANDATORY):** After each round, ask: "Does this change the issue tree?" If yes → update YAML, spawn new workstreams, iterate within Phase 3.
-- **Working checkpoints (optional):** Share findings when meaningful or when you need user input. Use `AskUserQuestion` when asking for direction:
-  - Example: "We found X. Should we: (A) Go deeper on this area, (B) Pivot to explore Y instead, (C) Continue as planned"
-
-### Phase 4: Final Checkpoint ⚠️ REQUIRED
-
-Present deliverable structure and direction to user:
-
-**Deliverable structure:**
-- Section outline (what sections will be covered)
-- Narrative arc (how sections connect)
-- Key direction (what will be recommended)
-- Evidence strength assessment (where evidence is strong vs weak)
-
-**Example:**
-```
-Final Checkpoint (Phase 4 of 6)
-
-Deliverable structure:
-1. Executive Summary - Key recommendation and rationale
-2. Market Viability - EU decorative paint market, eco segment opportunity
-3. Cost Advantage Analysis - Tariff/shipping impact, competitive positioning
-4. Channel Strategy - Amazon DTC feasibility, launch economics
-5. Recommendations - Phased approach with timeline
-6. Risks & Mitigations
-
-Direction: The deliverable will recommend Amazon DTC launch with phased approach,
-based on strong market evidence and validated cost advantage.
-
-Evidence strength: Strong on market size and cost structure, moderate on channel
-economics (limited comparable data)
-
-Ready to proceed with building this?
-```
-
-**★ USER SIGN-OFF required before deliverable.** Use `AskUserQuestion`:
-- Question: "Ready to proceed with building the deliverable?"
-- Options: "Yes, proceed" / "Minor adjustments needed" / "Major restructure needed"
-- If adjustments needed, follow up to understand what to change
+- **See `references/workflow/phases-overview.md`** for complete Phase 1 instructions including exact `AskUserQuestion` formats for format and length selection
 
 ### Phase 5: Deliverable Creation
 
@@ -470,8 +408,21 @@ In deliverable: Implications at section level, not every slide. 1-2 "so what for
 
 ### Case Study & Benchmarking Standards
 
+**Case study depth varies by engagement length:**
+- `3min`: 1-2 detailed case studies + 2-3 brief comparables
+- `5min`: 2-3 detailed case studies + 3-5 brief comparables
+- `10min`: 3-5 detailed case studies + 5-8 brief comparables
+- `10min+`: 5-8 detailed case studies + numerous brief comparables
+
+**For detailed case studies, include all 4 dimensions:**
+1. What they did (specific actions)
+2. Outcomes (quantitative results with timeframes)
+3. What worked / didn't work (root causes)
+4. Lesson for this client (explicit connection to current decision)
+
+**See `references/templates/yaml-formats.md` for complete case study requirements.**
+
 - Identify 3-5 named competitors (not "industry peers" — specific companies)
-- For each: (1) what they did, (2) outcomes, (3) what worked/didn't, (4) lesson for this client
 - At least one multi-dimensional benchmarking table (3+ competitors × 3+ dimensions)
 - Every benchmark ends with "so what for this client" — not just "Competitor X has 47% margin"
 
@@ -692,8 +643,9 @@ All work saved to `process/` for traceability and resumability:
 ## Quick Reference
 
 ```
-Phase 0 ⛔ → Phase 1 ⚠️ SCOPE → Phase 2 (research + hypotheses) ↔ Phase 3 (deep problem solving, iterative)
-→ Phase 4 ⚠️ SIGN-OFF → Phase 5 (deliver + pre-delivery checklist) → Phase 6 (next steps + save state)
+Phase 0 ⛔ → Phase 1 ⚠️ SCOPE → Phase 2 (preliminary research + internal meeting + Partner review + user checkpoint)
+→ Phase 3 (deep problem solving + meeting(s) + Partner review) → Phase 4 ⚠️ SIGN-OFF
+→ Phase 5 (deliver + pre-delivery checklist) → Phase 6 (next steps + save state)
 ```
 
 Flags: `--format` `--length` `--level` `--depth` `--resume` `--new` `--lang`
@@ -718,23 +670,55 @@ Flags: `--format` `--length` `--level` `--depth` `--resume` `--new` `--lang`
 └──────────────┬───────────────────────┘
                ▼
 ┌──────────────────────────────────────┐
-│  Phase 2 ↔ Phase 3 (iterative)      │
+│  Phase 2: Preliminary Research       │
+│  (internally iterative)              │
 │  ┌────────────────────────┐          │
 │  │ Research + hypothesize  │          │
 │  │ → Deploy experts       │          │
 │  │ → Analyze data         │◄──┐      │
-│  │ → Support, revise,     │   │      │
-│  │   or regenerate        │   │      │
+│  │ → Refine hypotheses    │   │      │
 │  └────────────┬───────────┘   │      │
-│               │ next / new    │      │
+│               │ iterate?      │      │
 │               └───────────────┘      │
-│  Cross-pollinate across experts      │
-│  Working checkpoints (voluntary)     │
+│  After experts complete:             │
+│  → Fact-Checker verifies data        │
+│  → Internal meeting                  │
+│    (Partner facilitates,             │
+│     Fact-Checker takes notes)        │
+│  → Partner formal review             │
+│                                      │
+│  ★ PRELIMINARY FINDINGS CHECKPOINT   │
+│  User reviews findings + issue tree  │
+└──────────────┬───────────────────────┘
+               ▼
+┌──────────────────────────────────────┐
+│  Phase 3: Deep Problem Solving       │
+│  (internally iterative)              │
+│  Optional: Start meeting if major    │
+│  change request from user            │
+│  ┌────────────────────────┐          │
+│  │ Validate hypotheses    │          │
+│  │ → Deploy experts       │          │
+│  │ → Analyze data         │◄──┐      │
+│  │ → Pivot check          │   │      │
+│  └────────────┬───────────┘   │      │
+│               │ iterate?      │      │
+│               └───────────────┘      │
+│  After experts complete:             │
+│  → Fact-Checker verifies data        │
+│  → Final meeting                     │
+│    (Partner facilitates,             │
+│     Fact-Checker takes notes)        │
+│  → Partner formal review             │
+│                                      │
+│  NO user checkpoint - proceed to     │
+│  Phase 4 after Partner approval      │
 └──────────────┬───────────────────────┘
                ▼
 ┌──────────────────────────────────────┐
 │  Phase 4: Final Checkpoint           │
 │  ★ MANDATORY — user must sign off    │
+│  - Partner final review              │
 │  - Full storyline outline            │
 │  - Evidence map                      │
 │  - Recommendations + risks (opt.)    │
