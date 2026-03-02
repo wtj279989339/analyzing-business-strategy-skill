@@ -1,68 +1,175 @@
 # Business Expert Skill
 
-MBB-style business strategy consultant skill for Claude Code. Provides structured, hypothesis-driven, MECE approach to business problems — grounded in data, supported by evidence, and delivered as compelling narratives.
+A strategy consulting skill for Claude Code that brings MBB-caliber thinking to your business problems. Think of it as having a BCG consultant on your team — someone who asks the right questions, structures complex problems, and delivers insights that actually drive decisions.
 
-## Overview
+## What This Skill Does
 
-This skill enables Claude to act as an MBB-caliber strategy consultant, helping users solve business problems using:
-- **MECE decomposition** — Break problems into mutually exclusive, collectively exhaustive components
-- **Hypothesis-driven approach** — Form a point of view early, then seek data to prove or disprove it
-- **Pyramid principle** — Lead with the answer, support with storylines, back each with evidence
-- **BCG patterns** — Action-oriented headlines, "Implications to [client]", specific numbers, named competitors
+This isn't a chatbot that summarizes Wikipedia articles. It's a structured approach to business strategy that mirrors how top-tier consultants actually work:
 
-## When to Use
+- **Starts with the right question** — Most business problems are poorly framed. We spend time upfront making sure we're solving the real problem, not just the stated one.
+- **Builds hypotheses, then tests them** — Rather than boiling the ocean with research, we form a point of view early and seek evidence to prove or disprove it. Faster, sharper, more decisive.
+- **Delivers complete packages** — You get both the presentation (slides for stakeholders) and the full analysis (detailed document for those who want depth). No more choosing between brevity and rigor.
+- **Maintains quality gates** — A Partner reviews all work before you see it. If the analysis is thin, the logic is weak, or the evidence doesn't support the conclusion, it gets sent back. You only see work that meets the bar.
 
-Use this skill for:
-- Market entry strategy, pricing strategy, M&A analysis
-- Competitive analysis, market research, market sizing
-- Growth strategy, go-to-market strategy, channel strategy
-- Business plans, investment thesis, due diligence
-- Operational optimization, cost reduction, supply chain
-- Unit economics, profitability analysis, benchmarking
-- Industry analysis, competitive landscape, TAM/SAM/SOM
+## When You'd Use This
 
-## Key Features
+### Market Entry & Expansion
+- "Should we enter the EU B2C market?"
+- "Which Southeast Asian market should we prioritize?"
+- "Is this acquisition target worth pursuing?"
 
-### 6-Phase Workflow
+### Pricing & Positioning
+- "How should we price our new product?"
+- "Can we raise prices without losing customers?"
+- "Where do we sit in the competitive landscape?"
 
-1. **Phase 0: Environment Check** — Setup and configuration
-2. **Phase 1: Scope & Clarification** — Align on problem statement and deliverable format
-3. **Phase 2: Landscape Research & Preliminary Findings** — Initial research, form hypotheses, mandatory checkpoint
-4. **Phase 3: Hypothesis Validation & Recommendations** — Deep dive, validate hypotheses, develop recommendations
-5. **Phase 4: Final Checkpoint** — User sign-off on storyline before deliverable
-6. **Phase 5: Deliverable Creation** — Build slides + companion .md document
-7. **Phase 6: Next Steps & Resumability** — Follow-up actions and save state
+### Growth Strategy
+- "How do we grow from $10M to $50M ARR?"
+- "Should we expand horizontally or go deeper in our core?"
+- "What's our path to market leadership?"
 
-### Agent Teams
+### Operational Decisions
+- "Should we build or buy this capability?"
+- "Where can we cut costs without hurting growth?"
+- "Is our go-to-market strategy working?"
 
-- **Project Lead (PL)** — You, managing phases and narrative direction
-- **Partner** — Quality gate, reviews all work before user sees it
-- **Business Experts** — Problem-scoped research (not data-scoped)
-- **Deliverable Advisor** — Builds final output with format-specific expertise
+### Investment & Due Diligence
+- "Is this market attractive enough to invest?"
+- "What's the realistic TAM/SAM/SOM?"
+- "What are the real risks here, not just the obvious ones?"
 
-### Output Formats
+## How It Works
 
-- **Markdown** (.md) — Always produced, provides depth and detail
-- **HTML slides** (.html) — Animated, runs in browser, zero dependencies
-- **PowerPoint** (.pptx) — Traditional slide deck
-- **Word document** (.docx) — Formal report format
-- **Notion** — Collaborative, team-editable
+### The Consulting Mindset
 
-**Important:** When user requests slides, BOTH slides and .md document are produced (slides for presenting, .md for depth).
+**Hypothesis-driven, not data-driven.** We don't start by gathering all available data. We start by forming a point of view about what's likely true, then seek evidence to validate or refute it. This is how consultants move fast without sacrificing rigor.
 
-### Parameters
+**MECE decomposition.** Every problem gets broken down into components that are Mutually Exclusive (no overlap) and Collectively Exhaustive (nothing missing). This prevents analysis paralysis and ensures we're not leaving blind spots.
 
-- `--format` — Output format (md, slides, pptx, docx, notion)
-- `--length` — Content coverage (3min, 5min, 10min, 10min+)
-- `--level` — User knowledge level (executive, analyst, technical)
-- `--sources` — Source credibility threshold (strict, balanced, broad)
-- `--lang` — Output language (en, zh, etc.)
+**Pyramid principle.** Lead with the answer, then support it with storylines, then back each storyline with evidence. Your CEO doesn't have time to read 50 pages to find out what you recommend — tell them upfront, then let them drill down if they want.
+
+**"So what?" test.** Every data point must answer "so what does this mean for the decision?" If it doesn't drive the recommendation, it's noise. Cut it.
+
+### The 6-Phase Workflow
+
+**Phase 1: Scope & Clarification**
+We restate your problem in our own words and ask clarifying questions. What decision is this informing? Who's the audience? What constraints matter? This prevents wasted work downstream.
+
+**Phase 2: Landscape Research & Preliminary Findings**
+Initial exploration to establish baseline understanding. We research the market, competitive landscape, trends, and develop preliminary insights. This is internally iterative — we refine as we learn. At the end, you get a checkpoint: "Here's what we've learned so far. Does this framing make sense?"
+
+**Phase 3: Hypothesis Validation & Recommendations**
+Based on your feedback, we go deeper on specific areas. Validate hypotheses with targeted research, develop recommendations, iterate until the analysis is solid. Another checkpoint before we build the deliverable.
+
+**Phase 4: Final Checkpoint**
+You see the complete storyline with evidence map before we build anything. This is your last chance to redirect. It's far cheaper to restructure an outline than to redo a 20-slide deck.
+
+**Phase 5: Deliverable Creation**
+We build both the slides (for presenting) and the full document (for reading). Contextual file names like `Market_Entry_Strategy_EU_Paint_v1.md`, not generic `report.md`. Multiple revision rounds with quality checks.
+
+**Phase 6: Next Steps & Resumability**
+Specific follow-up actions, not vague "do more research." If a next step involves publicly available data, we try to find it or give you the exact lookup path. If it requires human action (interviews, internal data), we generate ready-to-use guides.
+
+### The Team Structure
+
+**You work with a team, not a single agent:**
+
+- **Project Lead (PL)** — Manages the engagement, synthesizes findings, owns the narrative arc. This is the main Claude session.
+- **Partner** — Quality gate. Reviews all work before you see it. Can send work back if it doesn't meet the bar.
+- **Business Experts** — Each owns a problem-scoped question (not a data domain). They research, analyze, and deliver findings.
+- **Deliverable Advisor** — Builds the final output with format-specific expertise (slides, documents, etc.).
+
+This isn't just parallel processing — it's how consulting teams actually work. The Partner ensures quality, the Experts go deep on specific questions, the PL synthesizes into a coherent story.
+
+## Key Concepts
+
+### Internally Iterative Phases
+
+Phase 2 and Phase 3 aren't one-shot. They iterate internally until the work is solid:
+- **Phase 2:** Research → insights → refine → repeat until preliminary findings are ready
+- **Phase 3:** Validate → discover gaps → research deeper → repeat until satisfied
+
+The PL and Partner decide when to move forward. This prevents premature conclusions and ensures depth.
+
+### The Square Analogy
+
+Think of research space as 2D: X-axis = breadth, Y-axis = depth.
+- **Phase 2** covers 1/4 of the square (moderate breadth, shallow depth) — preliminary findings
+- **Phase 3** can go anywhere in the remaining space (deep on specific areas, or broader if needed)
+
+The PL decides where to focus Phase 3 based on your feedback from Phase 2. This flexibility prevents wasted effort.
+
+### Issue Tree: Two Exposure Levels
+
+The issue tree has one version but two exposure levels:
+- **Internal** (saved to process files): Key questions + detailed hypotheses (H1, H2, H3)
+- **User-facing**: Key questions + verbal context (no granular hypotheses)
+
+You see "What are the key questions we'll answer?" not "Here are our hypotheses H1, H2, H3 that we'll test." Less methodology, more substance.
+
+### Mandatory Checkpoints
+
+Three checkpoints ensure alignment:
+1. **Scope Checkpoint (Phase 1):** Confirm we're solving the right problem
+2. **Preliminary Findings Checkpoint (Phase 2):** Share initial research, get feedback before deep dive
+3. **Final Checkpoint (Phase 4):** Sign off on storyline before deliverable
+
+These aren't bureaucracy — they prevent wasted work. It's far cheaper to redirect after Phase 2 than to redo the entire analysis.
+
+### Problem Delegation, Not Task Delegation
+
+Business Experts receive problems, not tasks. We don't say "Go research the EU paint market and give me a report." We say "Can our cost advantage survive tariffs and shipping to remain competitive?" The Expert owns the how, the PL owns the what.
+
+This is how consulting teams work. You hire smart people, give them hard problems, and let them figure out the approach. The PL reviews their plan before they execute.
+
+### Always Both Formats
+
+When you request slides, you get both:
+1. **Slides** (pptx or html) — for presenting to stakeholders
+2. **Markdown document** (.md) — for reading and depth
+
+Slides are great for presentations but lack detail. The companion document provides the full analysis for anyone who wants to understand the reasoning.
+
+## Professional Standards
+
+### Content Density
+
+**Documents:** Every major section must have a framing paragraph, 3+ pieces of evidence with sources, at least one comparison or benchmark, and explicit implications for your decision.
+
+**Slides:** 60-80% of slides should be evidence slides (headline + 2-3+ evidence + source). The rest can be framing, transitions, or recommendations. No sparse slides with just a headline and 2 generic bullets.
+
+### Minimum Output by Length
+
+| Length | Slides | Words | Team Size | Use Case |
+|--------|--------|-------|-----------|----------|
+| 3min | 5-8 | 800-1200 | 2-3 experts | Quick decisions, focused questions |
+| 5min | 10-15 | 2000-2500 | 3-4 experts | Typical strategy work |
+| 10min | 20-25 | 4000-5000 | 4-5 experts | Detailed evidence, benchmarking |
+| 10min+ | 30+ | 6000+ | 5-6 experts | Full strategic review |
+
+These are minimums. If the research produces 20K words of findings, the deliverable should reflect that coverage, not compress it into a thin summary.
+
+### Business Strategy Professional Mindset
+
+**Action-oriented headlines.** Slide headlines state conclusions, not topics. "Market is attractive for new entrants" not "Market Overview."
+
+**Implications after every benchmark.** Don't just say "Competitor X has 47% margin." Say what it means for your decision. "Their 47% margin vs. our 32% suggests we're underpricing or have a cost structure problem."
+
+**Specific numbers, not vague language.** "15% CAGR from '23 to '30" not "significant growth." Precision builds credibility.
+
+**Named competitors, not "industry peers."** Identify 3-5 specific companies. "Uniqlo, Heilan, Nike" not "industry peers."
+
+**Show your sources early.** Include a "Basis of Perspectives" slide showing what research you did, what sources you used, and any limitations. This builds credibility before you make any claims.
+
+**"From... To..." framing for transformation.** When recommending change, show current state vs. future state. Makes the recommendation concrete.
+
+**Ranges over false precision.** "$590M-$650M" not "$623M." Acknowledge uncertainty rather than pretending you know the exact number.
 
 ## Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/business-expert-skill.git
+git clone https://github.com/FUY25/business-expert-skill.git
 
 # Copy to Claude skills directory
 cp -r business-expert-skill ~/.claude/skills/business-expert
@@ -72,21 +179,29 @@ cp -r business-expert-skill ~/.claude/skills/business-expert
 
 ```bash
 # Basic usage
-claude "Analyze the EU paint market for B2C entry"
+claude "Should we enter the EU B2C paint market?"
 
 # With parameters
-claude "Should we enter the EU market? --format pptx --length 10min --level executive"
+claude "Analyze the EU market entry opportunity --format pptx --length 10min --level executive"
 
 # Resume previous engagement
 claude "Continue the market analysis --resume"
 ```
+
+### Parameters
+
+- `--format` — Output format: `md` (markdown), `slides` (HTML), `pptx` (PowerPoint), `docx` (Word), `notion`
+- `--length` — Content coverage: `3min` (focused), `5min` (standard), `10min` (comprehensive), `10min+` (extensive)
+- `--level` — Audience: `executive` (high-level, decisions), `analyst` (balanced detail), `technical` (full detail)
+- `--sources` — Source credibility: `strict` (tier-1 only), `balanced` (default), `broad` (includes blogs, case studies)
+- `--lang` — Output language: `en`, `zh`, etc.
 
 ## Directory Structure
 
 ```
 business-expert/
 ├── SKILL.md                    # Main skill definition
-├── CHANGES.md                  # Version history and updates
+├── README.md                   # This file
 ├── references/
 │   ├── workflow/               # How to execute
 │   │   ├── phases-overview.md  # 6-phase workflow details
@@ -111,82 +226,45 @@ business-expert/
     └── evals.json              # Test cases
 ```
 
-## Key Concepts
+## Output Formats
 
-### Phase 2 & 3: Internally Iterative
+### Markdown (.md)
+Always produced. Provides full analysis with depth and detail. Good for reading, sharing with team, archiving.
 
-Both research phases are internally iterative — not rigid one-shot:
-- **Phase 2:** Research → insights → refine → repeat until preliminary findings are solid
-- **Phase 3:** Validate → gaps → research deeper → repeat until satisfied
+### HTML Slides (.html)
+Animated, runs in browser, zero dependencies. Good for remote presentations, sharing via link.
 
-### The Square Analogy
+### PowerPoint (.pptx)
+Traditional slide deck. Editable by user after generation. Good for corporate environments.
 
-Think of research space as 2D: X-axis = breadth, Y-axis = depth.
-- **Phase 2:** Covers 1/4 of the square (moderate breadth, shallow depth) — preliminary findings
-- **Phase 3:** Can go anywhere in remaining space (deep on specific areas, or broader if needed)
+### Word Document (.docx)
+Formal report format. Good for official documentation, compliance, archiving.
 
-### Issue Tree: Two Exposure Levels
+### Notion
+Collaborative, team-editable. Good for living documents that evolve over time.
 
-- **Internal** (saved to `process/issue-tree.yaml`): Key questions + hypotheses (H1, H2, H3)
-- **User-facing:** ASCII tree with key questions + verbal context (no granular hypotheses)
+**Important:** When you request slides (HTML or PPTX), you get BOTH the slides and a companion .md document. Slides for presenting, .md for depth.
 
-Users see "key questions to answer", not "hypotheses to test" — less internal methodology exposed.
+## What Makes This Different
 
-### Mandatory Checkpoints
+**It's not a research assistant.** Research assistants gather information. This skill solves problems. There's a difference between "here's what I found about the EU paint market" and "you should enter via Amazon DTC with a phased UK-first approach because..."
 
-- **Scope Checkpoint (Phase 1):** User confirms problem statement and format
-- **Preliminary Findings Checkpoint (Phase 2):** Share initial research, get feedback before deep dive
-- **Final Checkpoint (Phase 4):** User sign-off on storyline before deliverable
+**It's not a report generator.** Report generators summarize data. This skill builds arguments. Every section connects to the recommendation. If it doesn't drive the decision, it's cut.
 
-## Quality Standards
+**It's not a single-shot tool.** You get checkpoints throughout. Scope checkpoint, preliminary findings checkpoint, final checkpoint. This prevents wasted work and ensures alignment.
 
-### Content Density
+**It's not just slides or just documents.** You get both. Slides for presenting, documents for depth. No more choosing between brevity and rigor.
 
-- **Documents:** Every H2 section must have framing paragraph + 3+ evidence + comparison + implications
-- **Slides:** 60-80% evidence slides (headline + 2-3+ evidence + source)
-
-### Minimum Output by Length
-
-| Length | Slides | Words | Team Size |
-|--------|--------|-------|-----------|
-| 3min | 5-8 | 800-1200 | 2-3 experts |
-| 5min | 10-15 | 2000-2500 | 3-4 experts |
-| 10min | 20-25 | 4000-5000 | 4-5 experts |
-| 10min+ | 30+ | 6000+ | 5-6 experts |
-
-### BCG Patterns
-
-- Action-oriented headlines (not topic-only)
-- "Implications to [client]" after every benchmark
-- Specific numbers, not vague language
-- Named competitors, not "industry peers"
-- "Basis of Perspectives" slide showing sources
-- "From... To..." framing for transformation narratives
-
-## Recent Updates
-
-### Update 11 (2026-03-02)
-- Transformed Phase 2 and Phase 3 to reflect real BCG consulting workflow
-- Added mandatory preliminary findings checkpoint between Phase 2 and 3
-- Made both phases internally iterative (not rigid one-shot)
-- Issue tree now has two exposure levels (internal vs. user-facing)
-- Always produce BOTH slides and .md document when user requests slides
-- Contextual file naming (e.g., `Market_Entry_Strategy_EU_Paint_v1.md`)
-
-### Update 10 (2026-03-02)
-- Removed `--depth` parameter (consolidated into `--length`)
-- Clarified: longer length = more content covered, not more detail on same scope
-
-See [CHANGES.md](CHANGES.md) for complete version history.
+**It's not a solo agent.** You work with a team (PL, Partner, Experts, Deliverable Advisor). The Partner ensures quality. The Experts go deep. The PL synthesizes. This is how consulting teams actually work.
 
 ## Contributing
 
-This skill is actively developed based on real consulting practice. Contributions welcome!
+This skill is actively developed based on real consulting practice. Contributions welcome — especially from those with MBB or Big 4 strategy experience.
 
 ## License
 
-MIT License - see LICENSE file for details
+MIT License
 
 ## Credits
 
-Developed based on BCG consulting methodology and real-world strategy engagement patterns.
+Developed based on BCG consulting methodology and real-world strategy engagement patterns. Built for practitioners who need more than summaries — they need decisions.

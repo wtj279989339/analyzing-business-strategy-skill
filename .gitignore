@@ -6,6 +6,9 @@ SKILL.md.backup
 SKILL.md.new
 SKILL.md.old
 
+# Version history (internal development tracking)
+CHANGES.md
+
 # Backup directories (timestamped backups)
 *-backup-*/
 business-expert-backup-*/
