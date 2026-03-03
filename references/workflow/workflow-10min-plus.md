@@ -231,6 +231,21 @@ Core question: Should we launch B2C paint in EU/US?
 
 **Key principle:** Show the KEY QUESTIONS and directional context to the user, but keep granular hypotheses (H1, H2, H3) internal.
 
+### Partner Reviews Issue Tree
+
+After building the issue tree, have Partner review it:
+
+```python
+SendMessage(
+    type="message",
+    recipient="partner",
+    content="I've built the initial issue tree at process/issue-tree.yaml. Please review it and let me know if you see any issues or suggest improvements.",
+    summary="Issue tree review request"
+)
+```
+
+Wait for Partner's feedback. If Partner suggests changes, update the issue tree before deploying experts.
+
 ### Spawn Business Experts (Teammates with Plan Approval)
 
 For 10min/10min+ engagements, spawn 4-6 Business Experts as **teammates** with `mode="plan"`:

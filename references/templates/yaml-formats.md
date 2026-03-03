@@ -9,6 +9,106 @@ All agents must write structured YAML files (or .md files if YAML fails) to `pro
 
 ---
 
+## YAML Writing Tips & Troubleshooting
+
+### Common YAML Syntax Errors
+
+**1. Indentation (CRITICAL):**
+- Use **2 spaces** for indentation (NOT tabs)
+- Consistent indentation is required - mixing spaces/tabs will fail
+```yaml
+# ✅ CORRECT
+key_findings:
+  - finding: "Market growing"
+    confidence: high
+
+# ❌ WRONG (tabs or 4 spaces)
+key_findings:
+	- finding: "Market growing"
+    confidence: high
+```
+
+**2. Special Characters in Strings:**
+- Quote strings containing: `:` `,` `#` `&` `*` `!` `|` `>` `%` `@` `` ` ``
+```yaml
+# ✅ CORRECT
+finding: "Market size: $12B"
+source: "Report from 2025: Q4 analysis"
+
+# ❌ WRONG (unquoted colons)
+finding: Market size: $12B
+source: Report from 2025: Q4 analysis
+```
+
+**3. Multi-line Strings:**
+- Use `|` for literal (preserves newlines) or `>` for folded (wraps lines)
+```yaml
+# ✅ CORRECT
+implications: |
+  This finding suggests three things:
+  1. Market is large enough
+  2. Growth is accelerating
+  3. Competition is fragmented
+
+# ❌ WRONG (unquoted multi-line)
+implications: This finding suggests three things:
+  1. Market is large enough
+```
+
+**4. Empty Values:**
+- Use `""` for empty strings, `[]` for empty arrays
+```yaml
+# ✅ CORRECT
+evidence_summary: ""
+data_gaps: []
+
+# ❌ WRONG (missing values)
+evidence_summary:
+data_gaps:
+```
+
+### When to Use .md Fallback
+
+Use markdown format if:
+1. YAML write fails with syntax error
+2. File permission issues
+3. Content is very large (>500 lines)
+4. You're unsure about YAML syntax
+
+**Markdown equivalent:**
+```markdown
+# Workstream: market-viability
+
+**Phase:** preliminary
+**Agent:** expert-market
+**Status:** complete
+
+## Key Findings
+
+### Finding 1
+- **Finding:** Market growing at 3.2% CAGR
+- **Confidence:** high
+- **Source:** Euromonitor 2025
+- **Implications:** Large enough to support new entrants
+```
+
+### Validation Before Writing
+
+Before writing YAML, mentally check:
+- [ ] All indentation is 2 spaces (no tabs)
+- [ ] Strings with `:` or special chars are quoted
+- [ ] Multi-line strings use `|` or `>`
+- [ ] No empty values without `""` or `[]`
+- [ ] Lists use `- ` (dash + space)
+
+### If Write Fails
+
+1. **Check error message** - often indicates line number
+2. **Try .md fallback immediately** - don't retry YAML multiple times
+3. **Keep same structure** - just use markdown headings/bullets instead of YAML keys
+
+---
+
 ## Workstream Findings (Business Experts)
 
 **Business Experts create TWO files per workstream - one for each phase:**

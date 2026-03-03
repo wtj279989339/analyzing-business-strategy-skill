@@ -66,18 +66,20 @@ PL (main session — you)
 The team structure and process adapt based on engagement complexity:
 
 **`--length 3min` (Quick Analysis):**
-- Team: PL + 2 Business Experts (subagents, not teammates) + Partner (teammate, on-demand)
+- Team: PL + 2 Business Experts (subagents, not teammates) + Partner (teammate, spawned Phase 0)
 - Process:
-  - Phase 2: Research → PL reviews → User checkpoint
-  - Phase 3: Deep dive → Partner review (spawned on-demand, reads YAMLs) 
+  - Phase 0: Spawn Partner
+  - Phase 2: Partner reviews issue tree → Research → PL reviews → User checkpoint
+  - Phase 3: Deep dive → Partner review (reads YAMLs)
   - No meetings, no Fact-Checker, no Deliverable Advisor
   - PL does fact-checking inline and builds deliverable (respects user's format choice)
 
 **`--length 5min` (Standard - DEFAULT):**
-- Team: PL + 3 Business Experts (teammates) + Partner (teammate, on-demand) + Deliverable Advisor (teammate, on-demand)
+- Team: PL + 3 Business Experts (teammates) + Partner (teammate, spawned Phase 0) + Deliverable Advisor (teammate, on-demand)
 - Process:
-  - Phase 2: Research → PL sanity check → User checkpoint
-  - Phase 3: Deep dive → MEETING (Partner + Deliverable Advisor spawned, Partner reads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Experts get feedback to edit the research results → ask for Partner approval gates
+  - Phase 0: Spawn Partner
+  - Phase 2: Partner reviews issue tree → Research → PL sanity check → User checkpoint
+  - Phase 3: Deep dive → MEETING (Deliverable Advisor spawned, Partner reads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Experts get feedback to edit the research results → ask for Partner approval gates
   - 1 meeting only (Phase 3 final, includes Deliverable Advisor), partner have the power to ask agents or pl to pivot or redo some tasks
   - PL does fact-checking inline
   - Deliverable Advisor builds deliverable (respects user's format choice)
@@ -86,10 +88,10 @@ The team structure and process adapt based on engagement complexity:
 - Team: Full team (PL + 4-6 Business Experts + Partner + Fact-Checker + Deliverable Advisor, all teammates)
 - Process: Current flow (2 meetings, Partner throughout, Fact-Checker, Deliverable Advisor)
 
-**Partner is present for ALL lengths** to provide strategic feedback, but involvement varies:
-- 3min: On-demand review only (no meetings)
-- 5min: Single meeting at Phase 3 (with Deliverable Advisor)
-- 10min+: Full involvement (2 meetings)
+**Partner is spawned in Phase 0 for ALL lengths** to review issue tree and provide strategic feedback:
+- 3min: Reviews issue tree, provides final review in Phase 3 (no meetings)
+- 5min: Reviews issue tree, participates in Phase 3 meeting
+- 10min+: Reviews issue tree, participates in Phase 2 and Phase 3 meetings
 ---
 
 ## Detecting Agent Teams Availability
@@ -405,6 +407,15 @@ Participates **throughout** (not just at the end).
 
 **IMPORTANT: Use Read tool, not Skill tool, for nested skills.** The Skill tool cannot find nested skills at `skills/*/SKILL.md` paths. Always use Read tool to load nested skill files.
 
+**HTML Slide Style Selection (when building HTML slides):**
+
+Choose from these 3 default styles based on topic:
+- **Notebook Tabs** (#5) - Editorial, organized
+- **Pastel Geometry** (#6) - Friendly, modern
+- **Swiss Modern** (#11) - Clean, precise
+
+See `skills/frontend-slides/STYLE_PRESETS.md` for all 12 available styles if a different aesthetic fits better.
+
 ---
 
 ## Agent Web Access Setup
@@ -461,13 +472,13 @@ If an agent returns with "model knowledge only" findings and the Lead has web ac
 
 ---
 
-## Hub-and-Spoke Fallback
+## Hub-and-Spoke Fallback (Subagents Available, No Teams)
 
-When Agent Teams isn't available or the user declines to enable it, use the orchestrator-mediated pattern:
+When Agent Teams isn't available but the `Agent` tool is available, use the orchestrator-mediated pattern:
 
-1. **Round 1 (parallel):** Dispatch Business Experts via the Agent tool. Each works independently.
+1. **Round 1 (parallel):** Dispatch Business Experts via the Agent tool (no team_name). Each works independently.
 2. **Synthesis:** Read all YAML process files, cross-reference findings.
-3. **Partner review:** Run partner critique at orchestrator level.
+3. **Partner review:** Run partner critique at orchestrator level (spawn Partner as subagent).
 4. **Round 2 (targeted):** If needed, dispatch follow-up agents WITH cross-findings from Round 1 baked into their prompts.
 
 Same quality, just orchestrator-mediated instead of peer-to-peer.
@@ -478,6 +489,21 @@ Same quality, just orchestrator-mediated instead of peer-to-peer.
 1. **Pre-fetch and pass data** — Lead fetches URLs via curl/WebFetch, passes content into agent prompts. Agents analyze pre-fetched data without needing web access.
 2. **Warn the user upfront** — In Phase 0, tell the user: "I'll be launching research agents. They may ask for web permission — please approve when prompted, or I can pre-fetch data for them."
 3. **Never accept model-only fallback** — If an agent returns without web data, the Lead should do the research itself and either re-dispatch the agent with data or complete the expert's scope directly.
+
+---
+
+## Single-Agent Fallback (No Subagents, No Teams)
+
+When neither `TeamCreate` nor `Agent` tools are available, use the single-agent workflow:
+
+**See `references/workflow/single-agent-workflow.md` for complete instructions.**
+
+Key differences:
+- PL does all research sequentially (no parallel agents)
+- PL performs self-review using Partner guide criteria
+- PL builds deliverable directly (no Deliverable Advisor)
+- Adjust scope expectations (fewer workstreams, focused analysis)
+- Tell user upfront: "I'm working solo — this will take longer but I'll focus on the most critical questions."
 
 ---
 
@@ -516,6 +542,13 @@ findings YAML format.
   - If writing to `process/*.yaml` fails → write to `process/*.md` instead
   - Markdown format is acceptable for all process files
   - Keep the same structured format, just use markdown syntax instead of YAML
+
+  **YAML writing tips:**
+  - Use 2-space indentation (not tabs)
+  - Quote strings with special characters: `"value: text with colons"`
+  - Multi-line strings: use `|` for literal or `>` for folded
+  - If write fails → immediately retry as .md (don't retry YAML multiple times)
+  - See `references/templates/yaml-formats.md` for full troubleshooting guide
 
 **Spawning subagents for data gathering:**
 You can spawn subagents (using the Agent tool WITHOUT team_name) for grunt work like:

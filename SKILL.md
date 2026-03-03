@@ -148,30 +148,36 @@ Examples of making deliverables concrete:
 The team structure and process adapt based on engagement complexity:
 
 **`--length 3min` (Quick Analysis):**
-- Team: PL + 2 Business Experts (subagents, not teammates) + Partner (teammate, on-demand)
+- Team: PL + 2 Business Experts (subagents, not teammates) + Partner (teammate, spawned Phase 0)
 - Process:
-  - Phase 2: Research → PL reviews → User checkpoint
-  - Phase 3: Deep dive → Partner review (spawned on-demand, reads YAMLs) 
+  - Phase 0: Spawn Partner
+  - Phase 2: Partner reviews issue tree → Research → PL reviews → User checkpoint
+  - Phase 3: Deep dive → Partner review (reads YAMLs)
   - No meetings, no Fact-Checker, no Deliverable Advisor
   - PL does fact-checking inline and builds deliverable (respects user's format choice)
 
 **`--length 5min` (Standard - DEFAULT):**
-- Team: PL + 3 Business Experts (teammates) + Partner (teammate, on-demand) + Deliverable Advisor (teammate, on-demand)
+- Team: PL + 3 Business Experts (teammates) + Partner (teammate, spawned Phase 0) + Deliverable Advisor (teammate, on-demand)
 - Process:
-  - Phase 2: Research → PL sanity check → User checkpoint
-  - Phase 3: Deep dive → MEETING (Partner + Deliverable Advisor spawned, Partner reads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Experts get feedback to edit the research results → ask for Partner approval gates
+  - Phase 0: Spawn Partner
+  - Phase 2: Partner reviews issue tree → Research → PL sanity check → User checkpoint
+  - Phase 3: Deep dive → MEETING (Deliverable Advisor spawned, Partner reads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Experts get feedback to edit the research results → ask for Partner approval gates
   - 1 meeting only (Phase 3 final, includes Deliverable Advisor), partner have the power to ask agents or pl to pivot or redo some tasks
   - PL does fact-checking inline
   - Deliverable Advisor builds deliverable (respects user's format choice)
 
 **`--length 10min` and `10min+` (Comprehensive):**
 - Team: Full team (PL + 4-6 Business Experts + Partner + Fact-Checker + Deliverable Advisor, all teammates)
-- Process: Current flow (2 meetings, Partner throughout, Fact-Checker, Deliverable Advisor)
+- Process:
+  - Phase 0: Spawn Partner + Fact-Checker + Deliverable Advisor
+  - Phase 2: Partner reviews issue tree → Research → Meeting → User checkpoint
+  - Phase 3: Deep dive → Meeting → Deliverable
+  - 2 meetings (Phase 2 + Phase 3), Partner throughout, Fact-Checker, Deliverable Advisor
 
-**Partner is present for ALL lengths** to provide strategic feedback, but involvement varies:
-- 3min: On-demand review only (no meetings)
-- 5min: Single meeting at Phase 3 (with Deliverable Advisor)
-- 10min+: Full involvement (2 meetings)
+**Partner is spawned in Phase 0 for ALL lengths** to review issue tree and provide strategic feedback throughout:
+- 3min: Reviews issue tree, provides final review in Phase 3 (no meetings)
+- 5min: Reviews issue tree, participates in Phase 3 meeting
+- 10min+: Reviews issue tree, participates in Phase 2 and Phase 3 meetings
 
 ### Business Experts (Problem-Scoped) see `references/methodology/agent-teams-guide.md`
 
@@ -246,7 +252,12 @@ Participates **throughout** (not just at the end).
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-**Detect Agent Teams:** Check if `TeamCreate` is in your available tools. If yes → use Agent Teams. If not → tell user and proceed with hub-and-spoke fallback.
+**Detect Agent Teams:** Check if `TeamCreate` is in your available tools. If yes → use Agent Teams. If not → check if `Agent` tool is available for subagents (hub-and-spoke). If neither → use single-agent workflow.
+
+**Workflow selection:**
+- `TeamCreate` available → Use Agent Teams (teammates with coordination)
+- `Agent` available (no `TeamCreate`) → Use hub-and-spoke (subagents, PL coordinates)
+- Neither available → Use single-agent workflow (see `references/workflow/single-agent-workflow.md`)
 
 **Quick reference — correct teammate spawn:**
 ```python

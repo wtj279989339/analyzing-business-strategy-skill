@@ -9,13 +9,13 @@ This is the default workflow for typical strategy work with 3-4 key questions.
 **Team:**
 - PL (you)
 - 3 Business Experts (teammates with mode="plan")
-- Partner (teammate, on-demand in Phase 3)
+- Partner (teammate, spawned Phase 0)
 - Deliverable Advisor (teammate, on-demand in Phase 3)
 
 **Process:**
-- Phase 0: No team spawn (Partner + Deliverable Advisor spawned on-demand in Phase 3)
-- Phase 2: Research → PL sanity check → User checkpoint
-- Phase 3: Deep dive → MEETING (Partner + Deliverable Advisor spawned, Partner reads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Deliverable
+- Phase 0: Spawn Partner
+- Phase 2: Partner reviews issue tree → Research → PL sanity check → User checkpoint
+- Phase 3: Deep dive → MEETING (Deliverable Advisor spawned, Partner reads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Deliverable
 - 1 meeting only (Phase 3 final, includes Deliverable Advisor)
 - PL does fact-checking inline
 - Deliverable Advisor builds deliverable (respects user's format choice)
@@ -92,9 +92,26 @@ When dispatching subagents, use `model: "opus"` for Business Experts that need d
 
 After Phase 1 (post-scope), make a SPECIFIC MCP recommendation based on the problem domain. Point to `references/workflow/setup-guide.md`.
 
-### No Team Spawn in Phase 0
+### Spawn Partner in Phase 0
 
-For 5min engagements, do NOT spawn any teammates in Phase 0. Partner and Deliverable Advisor will be spawned on-demand in Phase 3 only.
+For 5min engagements, spawn Partner as a teammate in Phase 0:
+
+```python
+# Create team first
+TeamCreate(
+    team_name="<project-slug>-strategy",
+    description="Strategy engagement for <topic>"
+)
+
+# Partner
+Agent(
+    prompt="You are the Partner on this engagement. Read `references/methodology/partner-guide.md` for your role. You'll review the issue tree after the PL builds it, then participate in the Phase 3 meeting.",
+    subagent_type="general-purpose",
+    team_name="<project-slug>-strategy",
+    name="partner",
+    model="opus"
+)
+```
 
 ---
 
@@ -176,6 +193,21 @@ Core question: Should we launch B2C paint in EU/US?
 ```
 
 **Key principle:** Show the KEY QUESTIONS and directional context to the user, but keep granular hypotheses (H1, H2, H3) internal.
+
+### Partner Reviews Issue Tree
+
+After building the issue tree, have Partner review it:
+
+```python
+SendMessage(
+    type="message",
+    recipient="partner",
+    content="I've built the initial issue tree at process/issue-tree.yaml. Please review it and let me know if you see any issues or suggest improvements.",
+    summary="Issue tree review request"
+)
+```
+
+Wait for Partner's feedback. If Partner suggests changes, update the issue tree before deploying experts.
 
 ### Create Team
 
