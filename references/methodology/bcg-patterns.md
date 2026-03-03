@@ -1,8 +1,6 @@
 # BCG Deliverable Patterns
 
-Reference file distilled from ~15 real BCG decks across due diligence, market entry, turnaround,
-brand positioning, benchmarking, and market sizing engagements. Use these patterns to guide
-deliverable structure, headline style, data presentation, and narrative flow.
+Use these patterns to guide deliverable structure, headline style, data presentation, and narrative flow.
 
 ## Slide Headline Style
 
@@ -136,7 +134,6 @@ Same structural rigor as English decks. Key differences:
 - Transformation timelines use phases: "第一阶段：快速提升" → "第二阶段：推动转型"
 - "痛点" (pain points) → "行业领先做法" (industry best practices) → solution
 - Footnotes and sources in Chinese with original data source names
-- BCG copyright line: "波士顿咨询公司版权所有© 2024。保留所有权利。"
 
 ## Key Patterns to Replicate
 
