@@ -65,6 +65,7 @@ temp/
 evals/
 optimizationsummary.md
 optimization_summary.md
+OPTIMIZATION_SUMMARY.md
 
 # Node modules (if any JavaScript tooling is added)
 node_modules/
