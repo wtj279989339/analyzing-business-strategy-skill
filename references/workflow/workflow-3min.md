@@ -230,7 +230,7 @@ For 3min engagements, spawn 2 Business Experts as **subagents** (no team_name pa
 Agent(
     prompt="<problem scope prompt for branch 1>",
     subagent_type="general-purpose",
-    model="opus"
+    model="opus"  # PL selects in Phase 0: opus for complex/standard, sonnet for simple
     # NO team_name - this is a subagent
 )
 
@@ -238,7 +238,7 @@ Agent(
 Agent(
     prompt="<problem scope prompt for branch 2>",
     subagent_type="general-purpose",
-    model="opus"
+    model="opus"  # PL selects in Phase 0: opus for complex/standard, sonnet for simple
     # NO team_name - this is a subagent
 )
 ```

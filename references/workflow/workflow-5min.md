@@ -255,7 +255,7 @@ Agent(
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",   # ← REQUIRED for teammates
     name="expert-a",                         # ← REQUIRED for teammates
-    model="opus",
+    model="opus",  # PL selects in Phase 0: opus for complex/standard, sonnet for simple
     mode="plan"                              # ← REQUIRES PLAN APPROVAL
 )
 
@@ -265,7 +265,7 @@ Agent(
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",
     name="expert-b",
-    model="opus",
+    model="opus",  # PL selects in Phase 0: opus for complex/standard, sonnet for simple
     mode="plan"
 )
 
@@ -275,7 +275,7 @@ Agent(
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",
     name="expert-c",
-    model="opus",
+    model="opus",  # PL selects in Phase 0: opus for complex/standard, sonnet for simple
     mode="plan"
 )
 ```
@@ -376,7 +376,7 @@ user_feedback: "<summary of user feedback>"
 - `process/engagement-state.yaml` (check user feedback from Phase 2)
 - All `process/preliminary-*.yaml` files (build on Phase 2 findings)
 - `references/methodology/partner-guide.md` (for Partner review criteria)
-- `references/methodology/deliverable-advisor-guide.md` (for Deliverable Advisor role)
+- `references/methodology/agent-teams-guide.md` (see Deliverable Advisor section for role details)
 
 Based on user feedback from Phase 2, you now go deeper on specific areas.
 

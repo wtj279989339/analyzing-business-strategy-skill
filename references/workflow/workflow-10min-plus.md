@@ -119,7 +119,7 @@ Agent(
 
 # Fact-Checker
 Agent(
-    prompt="You are the Fact-Checker. Read `references/methodology/fact-checker-guide.md` for your role. You'll verify data quality and source reliability after Phase 2 and Phase 3 research.",
+    prompt="You are the Fact-Checker. Read `references/methodology/agent-teams-guide.md` (see Fact-Checker section) for your role. You'll verify data quality and source reliability after Phase 2 and Phase 3 research.",
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",
     name="fact-checker",
@@ -128,7 +128,7 @@ Agent(
 
 # Deliverable Advisor
 Agent(
-    prompt="You are the Deliverable Advisor. Read `references/methodology/deliverable-advisor-guide.md` for your role. You'll participate in meetings and build the final deliverable in Phase 5.",
+    prompt="You are the Deliverable Advisor. Read `references/methodology/agent-teams-guide.md` (see Deliverable Advisor section) for your role. You'll participate in meetings and build the final deliverable in Phase 5.",
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",
     name="deliverable-advisor",
@@ -167,7 +167,7 @@ scope_confirmed: true
 - `process/engagement-state.yaml` (check current phase and team status)
 - `references/methodology/partner-guide.md` (for Partner review criteria)
 - `references/templates/yaml-formats.md` (for expert output format)
-- `references/methodology/fact-checker-guide.md` (for Fact-Checker role)
+- `references/methodology/agent-teams-guide.md` (see Fact-Checker section for role details)
 
 This is the initial phase of the project. You establish baseline understanding through broad exploration, develop preliminary insights, form hypotheses, and conduct preliminary validation.
 
@@ -282,7 +282,7 @@ Agent(
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",
     name="expert-a",
-    model="opus",
+    model="opus",  # PL selects in Phase 0: opus for complex/standard, sonnet for simple
     mode="plan"
 )
 
@@ -292,7 +292,7 @@ Agent(
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",
     name="expert-b",
-    model="opus",
+    model="opus",  # PL selects in Phase 0: opus for complex/standard, sonnet for simple
     mode="plan"
 )
 
@@ -302,7 +302,7 @@ Agent(
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",
     name="expert-c",
-    model="opus",
+    model="opus",  # PL selects in Phase 0: opus for complex/standard, sonnet for simple
     mode="plan"
 )
 
@@ -312,7 +312,7 @@ Agent(
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",
     name="expert-d",
-    model="opus",
+    model="opus",  # PL selects in Phase 0: opus for complex/standard, sonnet for simple
     mode="plan"
 )
 
@@ -447,7 +447,7 @@ phase2_meeting_complete: true
 - `process/engagement-state.yaml` (check user feedback from Phase 2)
 - All `process/preliminary-*.yaml` files (build on Phase 2 findings)
 - `references/methodology/partner-guide.md` (for Partner review criteria)
-- `references/methodology/fact-checker-guide.md` (for Fact-Checker role)
+- `references/methodology/agent-teams-guide.md` (see Fact-Checker section for role details)
 
 Based on user feedback from Phase 2, you now go deeper on specific areas.
 
