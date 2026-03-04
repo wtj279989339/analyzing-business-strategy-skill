@@ -1,4 +1,4 @@
-# Business Expert Skill
+# Analyzing Business Strategy Skill
 
 A structured approach to business strategy that helps you analyze markets, evaluate opportunities, and make informed decisions. It asks the right questions, does the research, and delivers actionable recommendations backed by evidence.
 
