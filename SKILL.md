@@ -3,7 +3,7 @@ name: business-analyzing-strategy
 argument-hint: "[topic] [--format md|slides|pptx|docx|notion] [--length 3min|5min|10min|10min+] [--level executive|analyst|technical] [--depth quick|standard|deep] [--sources strict|balanced|broad] [--resume|--new] [--lang en|zh]"
 description: >
   Analyzes business strategy, markets, and competitive dynamics with structured thinking and evidence-driven insights.
-  Acts as your strategic partner to help you make informed business decisions through rigorous research and analysis.
+  Acts as your strategic PMO to help you make informed business decisions through rigorous research and analysis.
   Use when working on business strategy, market entry, pricing, M&A, growth strategy, competitive analysis,
   market research, business plans, operational optimization, go-to-market, unit economics, industry analysis,
   ROI analysis, market opportunity, revenue models, cost structure, SWOT, Porter's five forces, customer segmentation,
@@ -113,7 +113,7 @@ Longer length = more content covered, more insights delivered. Content density p
 
 **For complete team structure, roles, and spawning instructions, see `references/methodology/agent-teams-guide.md`.**
 
-Quick summary: You are the PL (Project Lead). Your team includes Partner (quality gate), (depending on --length) Fact-Checker (data verification + meeting notes), Business Experts (2-6 depending on --length), and (depending on --length) Deliverable Advisor (format/presentation). All are teammates (not subagents) when Agent Teams are available.
+Quick summary: You are the PL (Project Lead). Your team includes PMO (quality gate),  (depending on --length) DA (data verification + meeting notes), Business Experts (2-6 depending on --length), and (depending on --length) Deliverable Advisor (format/presentation). All are teammates (not subagents) when Agent Teams are available.
 
 **You are the PL (Project Lead).** You manage phases, checkpoints, user interaction, and narrative direction. You decide how many Business Experts to deploy based on complexity. You synthesize findings into a coherent storyline and present to the user at checkpoints.
 
@@ -130,7 +130,7 @@ When slides are requested, Deliverable Advisor builds them based on your .md, bu
 - Hypotheses we're testing
 - Progress state (which hypotheses are validated/refuted/pending)
 - **CRITICAL: PL must keep it updated** throughout the engagement as findings come in
-- All teammates (Partner, Experts, Deliverable Advisor) look at this file to understand current strategic direction
+- All teammates (PMO, Experts, Deliverable Advisor) look at this file to understand current strategic direction
 
 **Next-step mindset:** After every finding, every checkpoint, every piece of evidence — ask yourself: "What does this tell us? What should we do next to solve the problem?" Don't just collect information. Use each finding to sharpen the question, redirect experts, or pivot the issue tree. If Expert A discovers the market is saturated, don't wait for all experts to finish — immediately ask: "Does this change our entry strategy? Should Expert B focus on niche segments instead?" Active problem-solving means constantly asking "what next?" based on what you're learning.
 
@@ -156,35 +156,25 @@ Examples of making deliverables concrete:
 
 The team structure and process adapt based on engagement complexity:
 
-**`--length 3min` (Quick Analysis):**
-- Team: PL + 2 Business Experts (subagents, not teammates) + Partner (teammate, spawned Phase 0)
-- Process:
-  - Phase 0: Spawn Partner
-  - Phase 2: Partner reviews issue tree → Research → PL reviews → User checkpoint
-  - Phase 3: Deep dive → Partner review (reads YAMLs)
-  - No meetings, no Fact-Checker, no Deliverable Advisor
-  - PL does fact-checking inline and builds deliverable (respects user's format choice)
-
 **`--length 5min` (Standard - DEFAULT):**
-- Team: PL + 3 Business Experts (teammates) + Partner (teammate, spawned Phase 0) + Deliverable Advisor (teammate, on-demand)
+- Team: PL + 3 Business Experts (teammates) + PMO (teammate, spawned Phase 0) + Deliverable Advisor (teammate, on-demand)
 - Process:
-  - Phase 0: Spawn Partner
-  - Phase 2: Partner reviews issue tree → Research → PL sanity check → User checkpoint
-  - Phase 3: Deep dive → MEETING (Deliverable Advisor spawned, Partner reads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Experts get feedback to edit the research results → ask for Partner approval gates
-  - 1 meeting only (Phase 3 final, includes Deliverable Advisor), partner have the power to ask agents or pl to pivot or redo some tasks
+  - Phase 0: Spawn PMO
+  - Phase 2: PMO reviews issue tree → Research → PL sanity check → User checkpoint
+  - Phase 3: Deep dive → MEETING (Deliverable Advisor spawned, PMO reads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Experts get feedback to edit the research results → ask for PMO approval gates
+  - 1 meeting only (Phase 3 final, includes Deliverable Advisor), PMO have the power to ask agents or pl to pivot or redo some tasks
   - PL does fact-checking inline
   - Deliverable Advisor builds deliverable (respects user's format choice)
 
 **`--length 10min` and `10min+` (Comprehensive):**
-- Team: Full team (PL + 4-6 Business Experts + Partner + Fact-Checker + Deliverable Advisor, all teammates)
+- Team: Full team (PL + 4-6 Business Experts + PMO + Fact-Checker + Deliverable Advisor, all teammates)
 - Process:
-  - Phase 0: Spawn Partner + Fact-Checker + Deliverable Advisor
-  - Phase 2: Partner reviews issue tree → Research → Meeting → User checkpoint
+  - Phase 0: Spawn PMO + Fact-Checker + Deliverable Advisor
+  - Phase 2: PMO reviews issue tree → Research → Meeting → User checkpoint
   - Phase 3: Deep dive → Meeting → Deliverable
-  - 2 meetings (Phase 2 + Phase 3), Partner throughout, Fact-Checker, Deliverable Advisor
+  - 2 meetings (Phase 2 + Phase 3), PMO throughout, Fact-Checker, Deliverable Advisor
 
-**Partner is spawned in Phase 0 for ALL lengths** to review issue tree and provide strategic feedback throughout:
-- 3min: Reviews issue tree, provides final review in Phase 3 (no meetings)
+**PMO is spawned in Phase 0 for ALL lengths** to review issue tree and provide strategic feedback throughout:
 - 5min: Reviews issue tree, participates in Phase 3 meeting
 - 10min+: Reviews issue tree, participates in Phase 2 and Phase 3 meetings
 
@@ -192,7 +182,7 @@ The team structure and process adapt based on engagement complexity:
 
 Experts are organized by **problem**, not by data type. Each owns a *decision-relevant question* and pulls whatever data they need.
 
-**Correct pattern (problem-scoped — DO):**
+**DA (problem-scoped — DO):**
 - Expert A: "Can our cost advantage survive tariffs, shipping, and compliance to remain competitive?" — pulls cost data, tariff schedules, competitor pricing
 - Expert B: "Which channel gives the best path to market given <$500K budget?" — pulls channel economics, case studies, platform requirements
 - Expert C: "What's the risk to the OEM relationship from forward integration?" — pulls contract patterns, case studies
@@ -200,13 +190,13 @@ Experts are organized by **problem**, not by data type. Each owns a *decision-re
 Each expert produces an analytical conclusion, not a data dump. Problem scopes don't overlap. Data sources can.
 
 
-### Partner (Evaluator) see `references/methodology/agent-teams-guide.md`
+### PMO (Evaluator) see `references/methodology/agent-teams-guide.md`
 
-The Partner stress-tests all work before it reaches the user. **Partner focuses on strategic review, not data verification** - The Partner gives comments/feedback to experts during internal meetings and on demand, and agents respond and commit to addressing issues. The Partner also conducts formal reviews at phase gates. Their reviews are saved to `process/partner-review-*.yaml` (or `.md` if YAML fails) for traceability — visible in the project folder but never in the final deliverable. If the Partner is not satisfied, teammates iterate until the work meets the bar. The user only sees pre-vetted output.
+The PMO stress-tests all work before it reaches the user. **PMO focuses on strategic review, not data verification** - The PMO gives comments/feedback to experts during internal meetings and on demand, and agents respond and commit to addressing issues. The PMO also conducts formal reviews at phase gates. Their reviews are saved to `process/PMO-review-*.yaml` (or `.md` if YAML fails) for traceability — visible in the project folder but never in the final deliverable. If the PMO is not satisfied, teammates iterate until the work meets the bar. The user only sees pre-vetted output.
 
-**Partner evaluates:** Creativity, problem-solving effectiveness, consistency, insightfulness (obvious vs non-obvious insights), and whether findings will impress the client.
+**PMO evaluates:** Creativity, problem-solving effectiveness, consistency, insightfulness (obvious vs non-obvious insights), and whether findings will impress the client.
 
-**Read `references/methodology/partner-guide.md` before any Partner review.**
+**Read `references/methodology/PMO-guide.md` before any PMO review.**
 
 ### Fact-Checker (Data Integrity & Documentation) see `references/methodology/agent-teams-guide.md`
 
@@ -223,7 +213,7 @@ The Fact-Checker verifies data quality and documents meetings. Works in batch mo
 - `process/fact-check-phase2.yaml` - After all experts finish Phase 2
 - `process/fact-check-phase3.yaml` - After all experts finish Phase 3
 
-**Partner reviews Fact-Checker's reports during meetings** and decides if flagged issues undermine recommendations. PL can manually spot-check critical sources if needed.
+**PMO reviews Fact-Checker's reports during meetings** and decides if flagged issues undermine recommendations. PL can manually spot-check critical sources if needed.
 
 ### Deliverable Advisor
 
@@ -255,7 +245,7 @@ Participates **throughout** (not just at the end).
 │  Agent(...) without team_name  →  SUBAGENT  →  "X agents running"   │
 │                                                                      │
 │  If you see "X agents running" when spawning Business Experts,      │
-│  Partner, or Deliverable Advisor — YOU DID IT WRONG.                │
+│  PMO, or Deliverable Advisor — YOU DID IT WRONG.                │
 │                                                                      │
 │  The core team MUST ALWAYS include team_name parameter.             │
 └─────────────────────────────────────────────────────────────────────┘
@@ -304,14 +294,14 @@ Engagement Progress:
   - [ ] Detect Agent Teams capability
   - [ ] Select model tier based on complexity (Complex: opus, Standard: opus, Simple: sonnet)
   - [ ] Create engagement-state.yaml as phase map (track progress, checkpoints, findings status)
-  - [ ] Spawn team based on --length (Partner always; Fact-Checker/Deliverable Advisor conditionally)
+  - [ ] Spawn team based on --length (PMO always; Fact-Checker/Deliverable Advisor conditionally)
   - [ ] ⚠️ READ references/methodology/agent-teams-guide.md before spawning teammates
 
 - [ ] Phase 1: Scope & Clarification ⚠️ REQUIRED
   - [ ] Clarify problem, audience, constraints
   - [ ] Ask output format (mandatory unless --format set)
   - [ ] Ask report length (mandatory unless --length set)
-  - [ ] Consult Partner on scope framing (if Agent Teams available)
+  - [ ] Consult PMO on scope framing (if Agent Teams available)
   - [ ] ★ SCOPE CHECKPOINT — user confirms before proceeding
 
 - [ ] Phase 2: Preliminary Research
@@ -331,12 +321,12 @@ Engagement Progress:
   - [ ] Experts execute deep research → write YAML files to process/
   - [ ] Fact-checking and cross-workstream contradiction check
   - [ ] ★ PIVOT CHECK — update issue tree if findings require it
-  - [ ] Meeting/Review (Partner reviews work, gives feedback)
-  - [ ] ⚠️ READ references/methodology/partner-guide.md before Partner review
+  - [ ] Meeting/Review (PMO reviews work, gives feedback)
+  - [ ] ⚠️ READ references/methodology/PMO-guide.md before PMO review
 
 - [ ] Phase 4: Final Checkpoint ⚠️ REQUIRED
-  - [ ] ⚠️ READ references/methodology/partner-guide.md before final review
-  - [ ] Partner final review → process/partner-review-final.yaml
+  - [ ] ⚠️ READ references/methodology/PMO-guide.md before final review
+  - [ ] PMO final review → process/PMO-review-final.yaml
   - [ ] Present deliverable structure to user
   - [ ] ★ USER SIGN-OFF — must approve before deliverable creation
 
@@ -347,7 +337,7 @@ Engagement Progress:
   - [ ] 🔑 CRITICAL: Deliverable Advisor writes and owns slides based on PL's .md (5min+ only, when slides requested)
   - [ ] Build BOTH formats when slides requested: .md (PL) + slides (Deliverable Advisor)
   - [ ] 🔑 CRITICAL: PL reviews and approves slide content before presenting
-  - [ ] 🔑 CRITICAL: Partner final review of .md before presenting to user
+  - [ ] 🔑 CRITICAL: PMO final review of .md before presenting to user
   - [ ] ⚠️ READ references/workflow/pre-delivery-checklist.md before presenting
   - [ ] Run pre-delivery checklist verification
   - [ ] Present final deliverable to user
@@ -367,9 +357,9 @@ Engagement Progress:
 Quick summary of the 6-phase workflow:
 - **Phase 0:** Setup (spawn team if Agent Teams available, test web access) — **See `references/methodology/agent-teams-guide.md` for spawning instructions**
 - **Phase 1:** Scope (clarify problem, confirm format/length) → ★ SCOPE CHECKPOINT
-- **Phase 2:** Preliminary research (deploy experts, optional Fact-Checker verifies, internal meeting, Partner review) → ★ PRELIMINARY FINDINGS CHECKPOINT
-- **Phase 3:** Deep problem solving (validate hypotheses, optional start meeting if major change request, Fact-Checker verifies, final meeting, Partner review)
-- **Phase 4:** Final checkpoint (Partner final review, present deliverable structure) → ★ USER SIGN-OFF
+- **Phase 2:** Preliminary research (deploy experts, optional Fact-Checker verifies, internal meeting, PMO review) → ★ PRELIMINARY FINDINGS CHECKPOINT
+- **Phase 3:** Deep problem solving (validate hypotheses, optional start meeting if major change request, Fact-Checker verifies, final meeting, PMO review)
+- **Phase 4:** Final checkpoint (PMO final review, present deliverable structure) → ★ USER SIGN-OFF
 - **Phase 5:** Deliverable creation (PL Deliverable Advisor builds output)
 - **Phase 6:** Next steps (suggest follow-up work)
 
@@ -562,7 +552,7 @@ Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6
                 │    │         │ Agent A breaks Agent B's assumption
                 │    │         │ → resolve before proceeding
                 │    │         │
-                │    │ Partner restructure:
+                │    │ PMO restructure:
                 │    │ framing is wrong, not just weak evidence
                 │    │ → back to Phase 2 with new framing
                 │    │
@@ -573,7 +563,7 @@ Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6
 
 **Five loop-back triggers:**
 1. **Pivot check (Phase 3 → 2/3):** Finding changes the issue tree → update YAML, spawn new workstreams
-2. **Partner restructure (Phase 3 → 2):** Framing is wrong → back to Phase 2 with new framing
+2. **PMO restructure (Phase 3 → 2):** Framing is wrong → back to Phase 2 with new framing
 3. **Cross-workstream contradiction (Phase 3 → 3):** Expert A breaks Expert B's assumption → resolve before proceeding
 4. **Living issue tree:** `process/issue-tree.yaml` is updated as evidence comes in — user sees current version
 5. **Scope shift (Phase 3 → 1):** Real question is different → re-scope with user
@@ -587,7 +577,7 @@ Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6
 
 ## Fact-Check Step
 
-After each research round, before Partner review:
+After each research round, before PMO review:
 
 1. Identify top 5-8 most impactful data points (market sizes, growth rates, cost figures)
 2. For `verified` points: attempt to access `source_url`, check number matches
@@ -609,7 +599,7 @@ All work saved to `process/` for traceability and resumability:
 │   ├── issue-tree.yaml            # Living issue tree (versioned)
 │   ├── preliminary-*.yaml         # Phase 2: Business Expert findings
 │   ├── deep-*.yaml                # Phase 3: Business Expert findings
-│   ├── partner-review-*.yaml      # Partner reviews
+│   ├── PMO-review-*.yaml      # PMO reviews
 └── next-steps/
     ├── interview-guide-*.md       # Ready-to-use interview guides
     ├── survey-*.md                # Customer survey drafts
@@ -619,7 +609,7 @@ All work saved to `process/` for traceability and resumability:
 
 **YAML formats: `references/templates/yaml-formats.md`**
 
-**Process files are not optional.** Every agent — Business Expert, Partner, and Fact-Checker — must write YAML files to `process/` as specified. If a phase completes without its expected files, something went wrong. The `process/` directory is the engagement's source of truth — without it, there's no audit trail, no resumability, and no way for the Partner to review structured findings.
+**Process files are not optional.** Every agent — Business Expert, PMO, and Fact-Checker — must write YAML files to `process/` as specified. If a phase completes without its expected files, something went wrong. The `process/` directory is the engagement's source of truth — without it, there's no audit trail, no resumability, and no way for the PMO to review structured findings.
 
 ---
 
@@ -632,7 +622,7 @@ All work saved to `process/` for traceability and resumability:
 | When | Read | Why |
 |------|------|-----|
 | Before spawning teammates (Phase 0/2) | `references/methodology/agent-teams-guide.md` | All aspects of agent teamwork — setup, tool sequences, plan approval, problem delegation, troubleshooting |
-| Before any Partner review (Phase 2/3/4) | `references/methodology/partner-guide.md` | Review questions, data integrity checks, restructure triggers |
+| Before any PMO review (Phase 2/3/4) | `references/methodology/PMO-guide.md` | Review questions, data integrity checks, restructure triggers |
 | When building deliverable (Phase 5) | `references/methodology/bcg-patterns.md` | Structural patterns, headline styles, "Basis of Perspectives" examples |
 
 ### Templates (Formats & Schemas)
@@ -664,7 +654,7 @@ All work saved to `process/` for traceability and resumability:
 
 ## Important Principles
 
-**Be a thought partner, not a report generator.** The user knows their business better than any dataset. Your job is structure, data, and outside perspective. Challenge assumptions when something doesn't add up.
+**Be a thought PMO, not a report generator.** The user knows their business better than any dataset. Your job is structure, data, and outside perspective. Challenge assumptions when something doesn't add up.
 
 **Evidence-driven storytelling.** Evidence isn't just numbers — it's benchmarking, business cases, logical reasoning. But be explicit about what's hard data vs. inference.
 
@@ -677,9 +667,9 @@ All work saved to `process/` for traceability and resumability:
 ## Quick Reference
 
 ```
-Phase 0 ⛔ → Phase 1 ⚠️ SCOPE → Phase 2 (preliminary research + internal meeting + Partner review + user checkpoint)
-→ Phase 3 (deep problem solving + meeting(s)+Partner review) → Phase 4 ⚠️ SIGN-OFF
-→ Phase 5 (deliver + pre-delivery checklist+ Partner review) → Phase 6 (next steps + save state)
+Phase 0 ⛔ → Phase 1 ⚠️ SCOPE → Phase 2 (preliminary research + internal meeting + PMO review + user checkpoint)
+→ Phase 3 (deep problem solving + meeting(s)+PMO review) → Phase 4 ⚠️ SIGN-OFF
+→ Phase 5 (deliver + pre-delivery checklist+ PMO review) → Phase 6 (next steps + save state)
 ```
 
 Flags: `--format` `--length` `--level` `--depth` `--resume` `--new` `--lang`
@@ -729,13 +719,13 @@ Flags: `--format` `--length` `--level` `--depth` `--resume` `--new` `--lang`
 │  └────────────┬───────────┘   │      │
 │               │ iterate?      │      │
 │               └───────────────┘      │    │
-│  Phase 4 after Partner approval      │
+│  Phase 4 after PMO approval      │
 └──────────────┬───────────────────────┘
                ▼
 ┌──────────────────────────────────────┐
 │  Phase 4: Final Checkpoint           │
 │  ★ MANDATORY — user must sign off    │
-│  - Partner final review              │
+│  - PMO final review              │
 │  - Full storyline outline            │
 │  - Recommendations + risks (opt.)    │
 └──────────────┬───────────────────────┘
