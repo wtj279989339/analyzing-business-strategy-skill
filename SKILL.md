@@ -12,7 +12,7 @@ description: >
   "business plan for", "competitive landscape", "how to grow", "pricing strategy", "what's the TAM",
   "market sizing", "due diligence", "is this a good investment", "who are the competitors",
   "what's our moat", "should we build or buy", "where should we expand", "帮我分析", "市场调研",
-  "竞争分析", "商业计划", "定价策略", "进���策略", "行业分析", "增长策略".
+  "竞争分析", "商业计划", "定价策略", "进入策略", "行业分析", "增长策略".
   Do NOT trigger on: business emails, scheduling, HR admin, office productivity, technical infrastructure
   decisions (database selection, cloud cost comparison, API architecture), engineering cost calculations,
   or simple financial math without strategic business context.
