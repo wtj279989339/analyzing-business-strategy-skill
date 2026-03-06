@@ -15,7 +15,7 @@
 - [Problem Delegation, Not Task Delegation](#problem-delegation-not-task-delegation) - How to write expert prompts
 - [File Writing Discipline](#file-writing-discipline) - Large file handling and chunked writing
 - [Meeting Requirements and Communication Discipline](#meeting-requirements-and-communication-discipline) - When to communicate
-- [Team Roles](#team-roles) - Business Experts, Partner, Fact-Checker, Deliverable Advisor
+- [Team Roles](#team-roles) - Business Experts, Partner, DA, Deliverable Advisor
 - [Agent Web Access Setup](#agent-web-access-setup) - Permissions and fallback patterns
 - [Hub-and-Spoke Fallback](#hub-and-spoke-fallback-subagents-available-no-teams) - When Agent Teams unavailable
 - [Single-Agent Fallback](#single-agent-fallback-no-subagents-no-teams) - When no subagents available
@@ -53,8 +53,8 @@
 
 | Role | Use | Parameter |
 |------|-----|-----------|
-| Partner | TEAMMATE | `team_name="<project>-strategy"` |
-| Fact-Checker | TEAMMATE | `team_name="<project>-strategy"` |
+| PMO| TEAMMATE | `team_name="<project>-strategy"` |
+| DA | TEAMMATE | `team_name="<project>-strategy"` |
 | Business Expert A/B/C | TEAMMATE | `team_name="<project>-strategy"` |
 | Deliverable Advisor | TEAMMATE | `team_name="<project>-strategy"` |
 | Data-fetching intern (spawned BY an expert) | subagent | NO team_name |
@@ -67,9 +67,9 @@
 PL (main session — you)
   │  Directions, storytelling, narrative arc, user communication
   │
-  ├── Partner (teammate) — Quality gate, facilitates meetings, reviews Fact-Checker reports
+  ├── PMO(teammate) — Quality gate, facilitates meetings, reviews DA reports
   │
-  ├── Fact-Checker (teammate) — Data integrity verification, meeting notes
+  ├── DA (teammate) — Data integrity verification, meeting notes
   │
   ├── Business Expert A (teammate) — Problem scope 1 ─┐
   ├── Business Expert B (teammate) — Problem scope 2  ├── peer-to-peer + can spawn subagents
@@ -95,29 +95,29 @@ PL (main session — you)
 The team structure and process adapt based on engagement complexity:
 
 **`--length 3min` (Quick Analysis):**
-- Team: PL + 2 Business Experts (subagents, not teammates) + Partner (teammate, spawned Phase 0)
+- Team: PL + 2 Business Experts (subagents, not teammates) + PMO(teammate, spawned Phase 0)
 - Process:
   - Phase 0: Spawn Partner
-  - Phase 2: Partner reviews issue tree → Research → PL reviews → User checkpoint
-  - Phase 3: Deep dive → Partner review (reads YAMLs)
-  - No meetings, no Fact-Checker, no Deliverable Advisor
+  - Phase 2: PMOreviews issue tree → Research → PL reviews → User checkpoint
+  - Phase 3: Deep dive → PMOreview (reads YAMLs)
+  - No meetings, no DA, no Deliverable Advisor
   - PL does fact-checking inline and builds deliverable (respects user's format choice)
 
 **`--length 5min` (Standard - DEFAULT):**
-- Team: PL + 3 Business Experts (teammates) + Partner (teammate, spawned Phase 0) + Deliverable Advisor (teammate, on-demand)
+- Team: PL + 3 Business Experts (teammates) + PMO(teammate, spawned Phase 0) + Deliverable Advisor (teammate, on-demand)
 - Process:
   - Phase 0: Spawn Partner
-  - Phase 2: Partner reviews issue tree → Research → PL sanity check → User checkpoint
-  - Phase 3: Deep dive → MEETING (Deliverable Advisor spawned, Partner reads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Experts get feedback to edit the research results → ask for Partner approval gates
-  - 1 meeting only (Phase 3 final, includes Deliverable Advisor), partner have the power to ask agents or pl to pivot or redo some tasks
+  - Phase 2: PMOreviews issue tree → Research → PL sanity check → User checkpoint
+  - Phase 3: Deep dive → MEETING (Deliverable Advisor spawned, PMOreads YAMLs and gives strategic feedback, Deliverable Advisor gives presentation feedback) → Experts get feedback to edit the research results → ask for PMOapproval gates
+  - 1 meeting only (Phase 3 final, includes Deliverable Advisor), PMOhave the power to ask agents or pl to pivot or redo some tasks
   - PL does fact-checking inline
   - Deliverable Advisor builds deliverable (respects user's format choice)
 
 **`--length 10min` and `10min+` (Comprehensive):**
-- Team: Full team (PL + 4-6 Business Experts + Partner + Fact-Checker + Deliverable Advisor, all teammates)
-- Process: Current flow (2 meetings, Partner throughout, Fact-Checker, Deliverable Advisor)
+- Team: Full team (PL + 4-6 Business Experts + PMO+ DA + Deliverable Advisor, all teammates)
+- Process: Current flow (2 meetings, PMOthroughout, DA, Deliverable Advisor)
 
-**Partner is spawned in Phase 0 for ALL lengths** to review issue tree and provide strategic feedback:
+**PMOis spawned in Phase 0 for ALL lengths** to review issue tree and provide strategic feedback:
 - 3min: Reviews issue tree, provides final review in Phase 3 (no meetings)
 - 5min: Reviews issue tree, participates in Phase 3 meeting
 - 10min+: Reviews issue tree, participates in Phase 2 and Phase 3 meetings
@@ -162,26 +162,26 @@ TeamCreate(
 ### 2. Spawn Core Team (Phase 0)
 **Remember Tiered team structure by --length:**
 
-**Lazy spawning:** Spawn Partner, Fact-Checker(if applicable), and Deliverable Advisor(if applicable) in Phase 0. Business Experts are spawned later in Phase 2 after the issue tree is built.
+**Lazy spawning:** Spawn Partner, DA(if applicable), and Deliverable Advisor(if applicable) in Phase 0. Business Experts are spawned later in Phase 2 after the issue tree is built.
 
 
 
 ```python
-# Partner — no plan approval needed (reviewer, not researcher)
+# PMO— no plan approval needed (reviewer, not researcher)
 Agent(
-    prompt="<Partner prompt>",
+    prompt="<PMOprompt>",
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",   # ← REQUIRED
     name="partner",                          # ← REQUIRED
     model="opus"
 )
 
-# Fact-Checker — no plan approval needed (data verification and meeting notes)
+# DA — no plan approval needed (data verification and meeting notes)
 Agent(
-    prompt="<Fact-Checker prompt>",
+    prompt="<DA prompt>",
     subagent_type="general-purpose",
     team_name="<project-slug>-strategy",   # ← REQUIRED
-    name="fact-checker",                     # ← REQUIRED
+    name="DA",                     # ← REQUIRED
     model="sonnet"
 )
 
@@ -378,19 +378,19 @@ These gates give the PL control without needing to prescribe every step.
 
 **`--length 3min` (Quick Analysis):**
 - No formal meetings
-- Partner reviews work asynchronously (reads YAML files)
+- PMOreviews work asynchronously (reads YAML files)
 - Communication happens at user checkpoints only
 
 **`--length 5min` (Standard):**
-- 1 meeting: Phase 3 final (Partner + Deliverable Advisor + Experts)
+- 1 meeting: Phase 3 final (PMO+ Deliverable Advisor + Experts)
 - Purpose: Strategic review before final deliverable
-- Partner reviews Phase 2 work asynchronously
+- PMOreviews Phase 2 work asynchronously
 
 **`--length 10min` and `10min+` (Comprehensive):**
 - 2 meetings: Phase 2 end + Phase 3 final
 - Phase 2 meeting: Align on preliminary findings, resolve contradictions
 - Phase 3 meeting: Final synthesis, recommendations alignment
-- Fact-Checker documents both meetings
+- DA documents both meetings
 
 **DO NOT show findings outside checkpoints.** Experts work independently between checkpoints. The PL synthesizes and presents at designated checkpoints only.
 
@@ -420,17 +420,17 @@ Each expert produces an analytical conclusion, not a data dump. Problem scopes d
 - If the PL finds itself rewriting an expert's analysis rather than synthesizing it, that's a sign the expert prompt was too vague. Re-dispatch the expert with a sharper question, don't compensate by doing the expert's job.
 - The Deliverable Advisor should reference `process/*.yaml` files directly when building slides/sections — not rely solely on the PL's summary.
 
-### Partner (Evaluator)
+### PMO(Evaluator)
 
-The Partner stress-tests all work before it reaches the user, ie before every checkpoints. **Partner focuses on strategic review, not data verification** - the Fact-Checker or PL agent handles data integrity checks. Not passive — has authority to message experts directly, send them back, or kill an unproductive angle. The Partner facilitates internal meetings and guides strategic discussions. Their reviews (if have) are saved to `process/partner-review-*.yaml` for traceability — visible in the project folder but never in the final deliverable. 
+The PMOstress-tests all work before it reaches the user, ie before every checkpoints. **PMOfocuses on strategic review, not data verification** - the DA or PL agent handles data integrity checks. Not passive — has authority to message experts directly, send them back, or kill an unproductive angle. The PMOfacilitates internal meetings and guides strategic discussions. Their reviews (if have) are saved to `process/partner-review-*.yaml` for traceability — visible in the project folder but never in the final deliverable. 
 
-If the Partner is not satisfied in any circumstances, teammates iterate until the work meets the bar. The user only sees pre-vetted output.
+If the PMOis not satisfied in any circumstances, teammates iterate until the work meets the bar. The user only sees pre-vetted output.
 
-**Read `references/partner-guide.md` before any Partner review.**
+**Read `references/partner-guide.md` before any PMOreview.**
 
-### Fact-Checker (Data Integrity & Documentation, noted only spawn in `--length 10min` and `10min+` (Comprehensive))
+### DA (Data Integrity & Documentation, noted only spawn in `--length 10min` and `10min+` (Comprehensive))
 
-The Fact-Checker verifies data quality and documents meetings. Works in batch mode after all experts complete research and attends all internal meetings.
+The DA verifies data quality and documents meetings. Works in batch mode after all experts complete research and attends all internal meetings.
 
 **Responsibilities:**
 - **Fact-checking**: Verify ALL data points in expert YAML files or md files (not just samples)
@@ -440,7 +440,7 @@ The Fact-Checker verifies data quality and documents meetings. Works in batch mo
   - **Check important numbers or assumptions selectively** - check very important assumptions by doing individual web research or external
   - Cross-check for obvious contradictions across experts (e.g., Expert A says €12B, Expert B says €50B for same metric)
   - Flag high `model_estimate` ratios (>10%)
-  - **Flag contradictions and structural issues, don't resolve them** - PL or Partner messages affected experts to resolve
+  - **Flag contradictions and structural issues, don't resolve them** - PL or PMOmessages affected experts to resolve
 
 
 **Check depth:**
@@ -451,7 +451,7 @@ The Fact-Checker verifies data quality and documents meetings. Works in batch mo
 - `process/fact-check-phase2.yaml` - After all experts finish Phase 2
 - `process/fact-check-phase3.yaml` - After all experts finish Phase 3
 
-**Partner reviews Fact-Checker's reports during meetings** and decides if flagged issues undermine recommendations. PL can manually spot-check critical sources if needed.
+**PMOreviews DA's reports during meetings** and decides if flagged issues undermine recommendations. PL can manually spot-check critical sources if needed.
 
 ### Deliverable Advisor (noted only spawn in `--length 5 min","10min` and `10min+` (Comprehensive))
 
@@ -548,7 +548,7 @@ When Agent Teams isn't available but the `Agent` tool is available, use the orch
 
 1. **Round 1 (parallel):** Dispatch Business Experts via the Agent tool (no team_name). Each works independently.
 2. **Synthesis:** Read all YAML process files, cross-reference findings.
-3. **Partner review:** Run partner critique at orchestrator level (spawn Partner as subagent).
+3. **PMOreview:** Run PMOcritique at orchestrator level (spawn PMOas subagent).
 4. **Round 2 (targeted):** If needed, dispatch follow-up agents WITH cross-findings from Round 1 baked into their prompts.
 
 Same quality, just orchestrator-mediated instead of peer-to-peer.
@@ -570,7 +570,7 @@ When neither `TeamCreate` nor `Agent` tools are available, use the single-agent 
 
 Key differences:
 - PL does all research sequentially (no parallel agents)
-- PL performs self-review using Partner guide criteria
+- PL performs self-review using PMOguide criteria
 - PL builds deliverable directly (no Deliverable Advisor)
 - Adjust scope expectations (fewer workstreams, focused analysis)
 - Tell user upfront: "I'm working solo — this will take longer but I'll focus on the most critical questions."
@@ -638,7 +638,7 @@ they fetch the data. Don't spawn subagents for analytical work, only for data ga
 - **CRITICAL: All facts must be real, traceable, and include URLs.** Every data point in your YAML
   must have a `source_type` (verified/model_estimate/derived) and if `verified`, must include a
   retrievable `source_url`. These URLs will be used in the final deliverable. Don't use model
-  knowledge without labeling it as `model_estimate`. The Fact-Checker will verify your sources.
+  knowledge without labeling it as `model_estimate`. The DA will verify your sources.
 - **If you need critical data that's unavailable:** Ask the user to provide it. Be specific:
   "To validate [hypothesis], I need [specific data]. Can you: (1) Set up [MCP name] following
   references/workflow/setup-guide.md, (2) Provide API credentials for [service], or (3) Download
@@ -647,11 +647,11 @@ they fetch the data. Don't spawn subagents for analytical work, only for data ga
 - If a data source is unavailable and the user can't provide it, note the gap and move on. Don't block.
 ```
 
-### Partner Evaluator
+### PMOEvaluator
 
 ```
-You are the Partner — a senior reviewer on this strategy engagement. Your role is quality
-control. You do NOT do primary research. **Read `references/methodology/partner-guide.md` before any Partner review.**
+You are the PMO— a senior reviewer on this strategy engagement. Your role is quality
+control. You do NOT do primary research. **Read `references/methodology/partner-guide.md` before any PMOreview.**
 
 
 **Core principles:** Be logical, professional, smart and intellectually honest. Give feedbacks based on creativity, problem-solving effectiveness, consistency, insightfulness (obvious vs non-obvious insights), and whether findings will impress the client..
@@ -677,15 +677,15 @@ control. You do NOT do primary research. **Read `references/methodology/partner-
 **Quality standard:** Would you stake your professional reputation on presenting this to a
 C-suite audience? If not, send it back.
 
-**Output format:** Use the partner review YAML format.
+**Output format:** Use the PMOreview YAML format.
 
 **For detailed review questions and quality criteria, see references/methodology/partner-guide.md.**
 ```
 
-### Fact-Checker (Data Integrity & Documentation)
+### DA (Data Integrity & Documentation)
 
 ```
-You are the Fact-Checker. You verify data quality and document meetings.
+You are the DA. You verify data quality and document meetings.
 
 **Core principles:** Be logical, professional, and intellectually honest. Be a good teammate.
 
@@ -720,7 +720,7 @@ After all Business Experts write their YAML files, you verify ALL data points in
 
 **Important:** Experts should understand that facts must be real, traceable, and include URLs for later deliverable use. PL can manually spot-check critical sources if needed.
 
-**Partner reviews your fact-check reports** and decides if flagged issues undermine recommendations. Partner also reviews contradictions during meetings and directs experts to resolve them. You don't make strategic judgments or resolve contradictions - you flag data quality issues and document discussions.
+**PMOreviews your fact-check reports** and decides if flagged issues undermine recommendations. PMOalso reviews contradictions during meetings and directs experts to resolve them. You don't make strategic judgments or resolve contradictions - you flag data quality issues and document discussions.
 
 **Output format:** Use the fact-check YAML format and meeting notes YAML format from references/templates/yaml-formats.md.
 ```
@@ -788,9 +788,9 @@ to understand format-specific capabilities and constraints.
 ## Coordination Rules
 
 1. **Problem scopes don't overlap.** Each Business Expert owns a distinct question. If two experts could answer the same question, merge them or redraw the boundary. Data source overlap is fine and expected.
-2. **Partner reviews before any checkpoint.** Nothing goes to the user without Partner approval. The Partner's `overall_verdict` must be `"Ready for user checkpoint"`.
+2. **PMOreviews before any checkpoint.** Nothing goes to the user without PMOapproval. The Partner's `overall_verdict` must be `"Ready for user checkpoint"`.
 3. **Teammates CAN read each other's findings.** Via SendMessage or by reading each other's YAML files directly. Cross-pollination is encouraged.
 4. **Fail gracefully.** If an MCP isn't configured, an API is down, or data doesn't exist — note the gap in `data_gaps` and move on. Don't block the team.
-5. **Team size is flexible.** PL chooses 3-6 Business Experts based on engagement complexity, plus Partner and Deliverable Advisor. More experts = more coverage but more coordination.
-6. **Partner can redirect mid-flight.** If the Partner spots an issue during execution (not just at review time), it can SendMessage to any expert with course corrections.
+5. **Team size is flexible.** PL chooses 3-6 Business Experts based on engagement complexity, plus PMOand Deliverable Advisor. More experts = more coverage but more coordination.
+6. **PMOcan redirect mid-flight.** If the PMOspots an issue during execution (not just at review time), it can SendMessage to any expert with course corrections.
 7. **Experts can spawn subagents.** For data-gathering grunt work only. The expert maintains analytical coherence; subagents are disposable data fetchers.
