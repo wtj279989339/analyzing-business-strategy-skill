@@ -190,7 +190,7 @@ Experts are organized by **problem**, not by data type. Each owns a *decision-re
 Each expert produces an analytical conclusion, not a data dump. Problem scopes don't overlap. Data sources can.
 
 
-### PMO (Evaluator) see `references/methodology/agent-teams-guide.md`
+### Deliverable Advisor (Evaluator) see `references/methodology/agent-teams-guide.md`
 
 The PMO stress-tests all work before it reaches the user. **PMO focuses on strategic review, not data verification** - The PMO gives comments/feedback to experts during internal meetings and on demand, and agents respond and commit to addressing issues. The PMO also conducts formal reviews at phase gates. Their reviews are saved to `process/PMO-review-*.yaml` (or `.md` if YAML fails) for traceability — visible in the project folder but never in the final deliverable. If the PMO is not satisfied, teammates iterate until the work meets the bar. The user only sees pre-vetted output.
 
