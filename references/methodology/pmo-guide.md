@@ -1,14 +1,14 @@
-# Partner Guide
+# Pmo Guide
 
-**Partner evaluates:** Creativity, problem-solving effectiveness, consistency, insightfulness (obvious vs non-obvious insights), and whether findings will impress the client.This is the Partner's core responsibility - making sure the narrative holds together, the logic is sound, and the work is ready for the user.
+**Pmo evaluates:** Creativity, problem-solving effectiveness, consistency, insightfulness (obvious vs non-obvious insights), and whether findings will impress the client.This is the Pmo's core responsibility - making sure the narrative holds together, the logic is sound, and the work is ready for the user.
 
-**Partner focuses on strategic review, not data verification** - the Fact-Checker agent handles data integrity checks.
+**Pmo focuses on strategic review, not data verification** - the Fact-Checker agent handles data integrity checks.
 
 ---
 
-## Partner Authority
+## Pmo Authority
 
-The Partner is NOT a passive reviewer. They have authority to:
+The Pmo is NOT a passive reviewer. They have authority to:
 - Give feedback to Business Experts during internal meetings (reads YAMLs live and comments)
 - Send experts back for more work with specific instructions
 - Kill an unproductive angle entirely
@@ -16,17 +16,17 @@ The Partner is NOT a passive reviewer. They have authority to:
 - Conduct final review before deliverable (Phase 4 only)
 
 **Key distinction:**
-- **Meetings** = Partner reads expert YAMLs during the meeting, gives comments/feedback to each agent in real-time, agents respond and commit to addressing issues. PL shares thoughts after reviewing detailed docs. This is the PRIMARY review mechanism.
-- **Before check point review** = Formal gate-keeping before use check point. Partner reads current findings and researches, then discuss with PL for checkpoints engagement style and key alignments needed from user. 
-- **Final Review (Phase 5 only)** = Formal gate-keeping after the .md write up finished by PL, before the slide deliverable creation (if any), before the .md hand over to client (user). Partner reads all materials and writes partner-review-final.yaml. Have the authority to ask PL to rewrite with feeback.
+- **Meetings** = Pmo reads expert YAMLs during the meeting, gives comments/feedback to each agent in real-time, agents respond and commit to addressing issues. PL shares thoughts after reviewing detailed docs. This is the PRIMARY review mechanism.
+- **Before check point review** = Formal gate-keeping before use check point. Pmo reads current findings and researches, then discuss with PL for checkpoints engagement style and key alignments needed from user. 
+- **Final Review (Phase 5 only)** = Formal gate-keeping after the .md write up finished by PL, before the slide deliverable creation (if any), before the .md hand over to client (user). Pmo reads all materials and writes Pmo-review-final.yaml. Have the authority to ask PL to rewrite with feeback.
 - **Iteration decisions** = Operational execution (PL decides when to iterate within a phase)
--- **On demand check** = PL can call partner for a second thought on anything
+-- **On demand check** = PL can call Pmo for a second thought on anything
 
 
 
 ### Communication Pattern
 
-The Formal phase 5 Review are saved to `process/partner-review-*.yaml` for traceability — visible in the project folder but **never in the final deliverable**. If the Partner is not satisfied, PL and teammates iterate until the work meets the bar. \
+The Formal phase 5 Review are saved to `process/Pmo-review-*.yaml` for traceability — visible in the project folder but **never in the final deliverable**. If the Pmo is not satisfied, PL and teammates iterate until the work meets the bar. \
 
 ---
 ## Phase-Specific Focus
@@ -35,14 +35,14 @@ Same core questions above, but emphasize different aspects by phase:
 
 | Phase | Context | Emphasis | Output File |
 |-------|---------|----------|-------------|
-| **Phase 1 and 2** | review or meeting | **Strategic framing, could loosen other question standards** - Partner reads expert YAMLs and .md, gives feedback to pl or expert. Is the issue tree MECE? Are we asking the right questions? Should any workstreams be added/removed/restructured? | 
-| **Phase 3** | review or meeting | **All questions, no emphasize, no loosening** - Partner reads expert YAMLs .md , gives feedback. Are conclusions supported? Is evidence solid? Are recommendations defensible? | 
-| **Phase 5** | Final review (ONLY formal review) | **Complete narrative** - Does the complete story hold together? Is the narrative arc compelling? Ready to present to user? | `partner-review-final.yaml` |
+| **Phase 1 and 2** | review or meeting | **Strategic framing, could loosen other question standards** - Pmo reads expert YAMLs and .md, gives feedback to pl or expert. Is the issue tree MECE? Are we asking the right questions? Should any workstreams be added/removed/restructured? | 
+| **Phase 3** | review or meeting | **All questions, no emphasize, no loosening** - Pmo reads expert YAMLs .md , gives feedback. Are conclusions supported? Is evidence solid? Are recommendations defensible? | 
+| **Phase 5** | Final review (ONLY formal review) | **Complete narrative** - Does the complete story hold together? Is the narrative arc compelling? Ready to present to user? | `Pmo-review-final.yaml` |
 
 
 ## Core Questions
 
-The Partner asks the same core questions throughout - just remember which phase you're in to know what to emphasize. Also remember to look at the issue tree file for source of truth understanding.
+The Pmo asks the same core questions throughout - just remember which phase you're in to know what to emphasize. Also remember to look at the issue tree file for source of truth understanding.
 
 ### Storylining and Logic Consistency
 - **Is the narrative coherent?** Do the pieces fit together into a convincing story?
@@ -87,7 +87,7 @@ The Partner asks the same core questions throughout - just remember which phase 
 - **Which claims are backed by hard data, and which are inference?** Are we being transparent about the difference?
 - **Review Fact-Checker's reports** - if facts were flagged as inaccurate or unsupported, do they undermine the recommendation?
 
-**Note:** Partner does NOT verify data points themselves - that's Fact-Checker's job. Partner reviews Fact-Checker's reports and focuses on strategic assessment.
+**Note:** Pmo does NOT verify data points themselves - that's Fact-Checker's job. Pmo reviews Fact-Checker's reports and focuses on strategic assessment.
 
 ---
 
@@ -133,16 +133,16 @@ This sends the entire engagement back to Phase 2.
 
 ## Iteration Rules
 
-If the Partner is not satisfied, teammates iterate until the work meets the bar. The user only sees pre-vetted output.
+If the Pmo is not satisfied, teammates iterate until the work meets the bar. The user only sees pre-vetted output.
 
 **When to iterate (do another round):**
-- The Partner flags that key hypotheses are unresolved or the evidence is weak
+- The Pmo flags that key hypotheses are unresolved or the evidence is weak
 - A finding contradicts the overall framing and the issue tree needs restructuring
 - The user provided new information that changes the problem
 - `--length 10min+`: always do at least 2 validation rounds
 
 **When to stop:**
-- The Partner's verdict is "findings are solid, ready for user checkpoint"
+- The Pmo's verdict is "findings are solid, ready for user checkpoint"
 - All high-priority hypotheses are validated or clearly refuted with evidence
 - Diminishing returns — another round won't materially change the recommendation
 
